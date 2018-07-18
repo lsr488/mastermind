@@ -20,12 +20,15 @@
 // 4 blue
 // 5 purple
 
-function init() {
-
+function startGame() {
+	genCode();
+	populateCode();
+	resetGame();
 }
 
 var colors = ["R", "O", "Y", "G", "B", "P"];
 var code = [];
+var tempCode = [];
 
 // genCodeWhile if codeNumber > colors.length
 // because we're using colors.length as a 
@@ -35,39 +38,36 @@ var code = [];
 // TODO: create an option for more colors and a longer code to break
 var codeNumber = 4;
 
-// generate solution colors
-// create new array
-	// generate random numbers to copy colors elements to
-	// the code array, but no repeats
-	// code = colors.slice(i, i+1)
-
-// this isn't very flexible for larger code sets
 function genCode() {
-	var tempCode = [];
+
 	while(tempCode.length < codeNumber) {
-		// console.log("tempCode Length:", tempCode.length);
 		var colorSelector = genNum();
 		if(tempCode.includes(colorSelector)) {
-			// console.log('tempCode:', tempCode);
-			// console.log('colorSelector:', colorSelector);
 			// console.log("tempCode includes " + colorSelector);
 			// ...do I need to do something on the true condition?
 		} else {
-			// console.log("num to push:", colorSelector);
 			tempCode.push(colorSelector);		
 		};
-	// console.log(tempCode);
-	// while(tempCode.length > codeNumber) {
-	// 	console.log("tempCode is too long.")
-	// 	console.log(tempCode.pop());
-	// }
 	}
 	console.log(tempCode);
+	return tempCode;
 }
-// compare each colorSelector against each value of tempCode
-	// if false (no match), push to tempCode
-	// if true, ... return? do another colorSelector?
+
+function populateCode() {
+	tempCode.forEach(function(el) {
+		code.push(colors[el]);
+	});
+		console.log(code);
+}
+
+// this potentially isn't very flexible if we want a bigger code
+// because it's dependent on the length colors array
 function genNum() {
-	var x = (Math.floor(Math.random()*colors.length + 1));
+	var x = (Math.floor(Math.random()*colors.length));
 	return x;
+}
+
+function resetGame() {
+	tempCode = [];
+	code = [];
 }
