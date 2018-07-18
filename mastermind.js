@@ -20,15 +20,15 @@
 // 4 blue
 // 5 purple
 
+// resetGame should definitely not be in the startGame function
+// but it is until I create a better way to reset code back to zero
 function startGame() {
 	genCode();
-	populateCode();
 	resetGame();
 }
 
 var colors = ["R", "O", "Y", "G", "B", "P"];
 var code = [];
-var tempCode = [];
 
 // genCodeWhile if codeNumber > colors.length
 // because we're using colors.length as a 
@@ -39,25 +39,20 @@ var tempCode = [];
 var codeNumber = 4;
 
 function genCode() {
+var tempCode = [];
 
 	while(tempCode.length < codeNumber) {
 		var colorSelector = genNum();
-		if(tempCode.includes(colorSelector)) {
-			// console.log("tempCode includes " + colorSelector);
-			// ...do I need to do something on the true condition?
-		} else {
+		if(!tempCode.includes(colorSelector)) {
 			tempCode.push(colorSelector);		
-		};
+		}
 	}
-	console.log(tempCode);
-	return tempCode;
-}
-
-function populateCode() {
 	tempCode.forEach(function(el) {
 		code.push(colors[el]);
 	});
-		console.log(code);
+	console.log("code:", code);
+	// console.log("tempCode:", tempCode);
+	return code;
 }
 
 // this potentially isn't very flexible if we want a bigger code
