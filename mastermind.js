@@ -23,7 +23,7 @@
 // resetGame should definitely not be in the startGame function
 // but it is until I create a better way to reset code back to zero
 var codeDisplay = document.querySelector(".code");
-var guessDisplay = document.querySelector(".guesses");
+var guessesDisplay = document.querySelector(".guesses");
 
 function startGame() {
 	genCode();
@@ -58,7 +58,7 @@ var tempCode = [];
 	console.log("code :", code);
 
 	// display the code on the website
-	codeDisplay.textContent = "Code : " + code.join(", ");
+	codeDisplay.textContent = code.join(", ");
 	return code;
 }
 
@@ -127,7 +127,8 @@ function getGuess() {
 	// 	console.log("Number of inexact matches:", isNotExactMatch, isInCode);
 	// }
 
-	guessDisplay.textContent = "Guess: " + guesses.join(", ");
+	// display guesses on webpage
+	guessesDisplay.textContent = guesses.join(", ");
 
 
 }
@@ -142,6 +143,9 @@ function checkGuess(guesses) {
 function resetGame() {
 	tempCode = [];
 	code = [];
+	guesses = [];
+	// codeDisplay.textContent = "";
+	// guessesDisplay.textContent = "";
 }
 
 startGame();
