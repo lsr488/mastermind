@@ -99,14 +99,21 @@ function getGuess() {
 		}
 	}
 
-	console.log("Number of colors included:", isInCode); // white key peg
 	console.log("Number of exact matches:", isExactMatch); // black key peg
+	console.log("Number of colors included:", isInCode); // white key peg
 	console.log(hints);
 
 	// display guesses on webpage
 	guessesDisplay.textContent = guesses.join(", ");
 	hintsDisplay.textContent = hints.sort().join(" ");
 
+}
+
+function startGuessLoop() {
+	while(turnNumber > 0) {
+		getGuess();
+		turnNumber--;
+	}
 }
 
 
@@ -118,4 +125,4 @@ function resetGame() {
 	// guessesDisplay.textContent = "";
 }
 
-startGame();
+// startGame();
