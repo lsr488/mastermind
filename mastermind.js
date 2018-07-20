@@ -72,7 +72,6 @@ function genNum() {
 	return x;
 }
 
-
 // get user guess and compare guess against code
 // TODO: refactor into 2 functions, getGuess and checkGuess
 function getGuess() {
@@ -87,17 +86,6 @@ function getGuess() {
 	guesses = guesses.split(", ");
 	console.log("guess:", guesses);
 
-	// check if each element of guess appears is anywhere in code
-	// guesses.forEach(function(guess) {
-	// 	if(code.includes(guess)) {
-	// 		console.log(guess + " is in the code.");
-	// 		isInCode++;
-	// 	} else {
-	// 		console.log(guess + " is not in the code.");
-	// 		// isNotInCode++;
-	// 	}
-	// });
-
 // check if exact match between code[i] and guesses[i]
 	for(var i = 0; i < guesses.length; i++) {
 		if(guesses[i] == code[i]) {
@@ -105,50 +93,22 @@ function getGuess() {
 			isExactMatch++;
 			hints.push("*");
 		} else if(code.includes(guesses[i])) {
-			console.log(guesses[i] + " is in the code.");
+			console.log(guesses[i] + " is in the code."); // white key peg
 			isInCode++;
 			hints.push("o");
-			// console.log("no match:", guesses[i], code[i]); // is this needed?
-			// isNotExactMatch++;
 		}
 	}
 
 	console.log("Number of colors included:", isInCode); // white key peg
-	// if(isInCode > 0) {
-	// 	var includedColor = [];
-	// 	for(var i = 0; i < isInCode; i++) {
-	// 		includedColor.push("o");
-	// 	}
-	// 	console.log(includedColor);
-	// }
-	// console.log("Number of colors not included: ", isNotInCode);
 	console.log("Number of exact matches:", isExactMatch); // black key peg
-	// if(isExactMatch > 0) {
-	// 	var exactColor = [];
-	// 	for(var i = 0; i < isExactMatch; i++) {
-	// 		exactColor.push("*");
-	// 	}
-	// 	console.log(exactColor);
-	// }
-	// console.log("Number of inexact matches:", isNotExactMatch);
-	// if(isNotExactMatch > 0 && isInCode > 0) {
-	// 	console.log("Number of inexact matches:", isNotExactMatch, isInCode);
-	// }
-
 	console.log(hints);
 
 	// display guesses on webpage
 	guessesDisplay.textContent = guesses.join(", ");
-
+	hintsDisplay.textContent = hints.sort().join(" ");
 
 }
 
-// compare guess against code
-// function checkGuess(guesses) {
-// 	getGuess();	
-
-// 	console.log(guesses);
-// }
 
 function resetGame() {
 	tempCode = [];
