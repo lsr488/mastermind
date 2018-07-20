@@ -1,0 +1,28 @@
+.red {
+	color: red;
+}
+
+.orange {
+	color: orange;
+}
+
+.yellow {
+	color: goldenrod;
+}
+
+.green {
+	color: green;
+}
+
+.blue {
+	color: blue;
+}
+
+.purple {
+	color: purple;
+}
+
+.mono {
+	font-family: monospace; 
+	margin-bottom: 1em;
+}
