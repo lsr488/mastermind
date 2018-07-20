@@ -8,17 +8,25 @@
 
 <h1>Mastermind Game</h1>
 
-<h2>Instructions</h2>
+<h2><span class="red"><span class="underline">R</span>ed.</span> <span class="orange"><span class="underline">O</span>range.</span> <span class="yellow"><span class="underline">Y</span>ellow.</span> <span class="green"><span class="underline">G</span>reen.</span> <span class="blue"><span class="underline">B</span>lue.</span> <span class="purple"><span class="underline">P</span>urple.</span></h2>
 
-<h3>Color Options</h3>
-<p><span class="red">Red.</span> <span class="orange">Orange.</span> <span class="yellow">Yellow.</span> <span class="green">Green.</span> <span class="blue">Blue.</span> <span class="purple">Purple.</span></p>
-
-<p>Guess four colors. There are no repeats.</p>
-<p>Input example: R, G, B, O</p>
+<p>Guess four colors. There are no repeats. Input example: R, G, B, O</p>
 
 <div class="mono">Code : <span id="code"></span></div>
-<div class="mono">Current Guess: <span id="guesses"></span></div>
-<div class="mono">Current Hints: <span id="hints"></span></div>
+<div class="mono">Guess: <span id="guesses"></span> 
+<div class="mono">Hints: <span id="hints"></span></div>
+
+<div class="archive">
+	<div class="mono guess-archive">
+		<p>Guess Archive:</p>
+		<span id="guessesArchive"></span>
+	</div>
+	<div class="mono hints-archive">
+		<p>Hints Archive:</p>
+		<span id="hintsArchive"></span>
+	</div>
+</div>
+<!-- <div class="mono">Current </div> -->
 
 <script type="text/javascript" src="mastermind.js"></script>
 </body>

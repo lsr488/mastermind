@@ -25,11 +25,13 @@
 var codeDisplay = document.querySelector("#code");
 var guessesDisplay = document.querySelector("#guesses");
 var hintsDisplay = document.querySelector("#hints");
+var guessesArchiveDisplay = document.querySelector("#guessesArchive");
+var hintsArchiveDisplay = document.querySelector("#hintsArchive");
 
 function startGame() {
 	genCode();
-	getGuess();
-	resetGame();
+	startGuessLoop();
+	// resetGame();
 }
 
 var colors = ["R", "O", "Y", "G", "B", "P"];
@@ -44,7 +46,7 @@ var hintsArchive = [];
 // has spaces that can't be filled
 // TODO: create an option for more colors and a longer code to break
 var codeNumber = 4;
-var turnNumber = 2;
+var turnNumber = 1;
 
 function genCode() {
 var tempCode = [];
@@ -80,10 +82,12 @@ function getGuess() {
 	var isExactMatch = 0;
 	// var isNotExactMatch = 0; 
 	var hints = [];
+	var guessesArchiveString = "";
+	var hintsArchiveString = "";
 
-	var guesses = "R, O, Y, G";	
+	var guesses = "r,o,y,g";	
 	// var guesses = window.prompt("Select four colors. There are no repeats. Example: R, G, B, O.");
-	guesses = guesses.split(", ");
+	guesses = guesses.toUpperCase().split(",");
 	console.log("guess:", guesses);
 
 // check if exact match between code[i] and guesses[i]
@@ -98,14 +102,31 @@ function getGuess() {
 			hints.push("o");
 		}
 	}
+	guessesArchive.push(guesses);
+	hintsArchive.push(hints);
 
 	console.log("Number of exact matches:", isExactMatch); // black key peg
 	console.log("Number of colors included:", isInCode); // white key peg
 	console.log(hints);
 
+	for(var i = 0; i < guessesArchive.length; i++) {
+		guessesArchiveString += guessesArchive[i].join(", ") + "<br>";
+	}
+
+	for(var j = 0; j < hintsArchive.length; j++) {
+		hintsArchiveString += hintsArchive[j].sort().join(" ") + "<br>";
+	}
+
+	// console.log(guessesArchiveString + hintsArchiveString)
+
+	// console.log(guessesArchiveString);
+	// console.log(hintsArchiveString);
+
 	// display guesses on webpage
 	guessesDisplay.textContent = guesses.join(", ");
 	hintsDisplay.textContent = hints.sort().join(" ");
+	guessesArchiveDisplay.innerHTML = guessesArchiveString;
+	hintsArchiveDisplay.innerHTML = hintsArchiveString;
 
 }
 
@@ -116,13 +137,20 @@ function startGuessLoop() {
 	}
 }
 
-
 function resetGame() {
 	tempCode = [];
 	code = [];
 	guesses = [];
+	guessesArchive = [];
+	// guessesArchiveString = "";
+	hintsArchive = [];
+	// hintsArchiveString = "";
 	// codeDisplay.textContent = "";
 	// guessesDisplay.textContent = "";
+	// guessesDisplay.textContent = "";
+	// hintsDisplay.textContent = "";
+	// guessesArchiveDisplay.innerHTML = "";
+	// hintsArchiveDisplay.innerHTML = "";
 }
 
-// startGame();
+startGame();

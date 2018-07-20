@@ -1,3 +1,7 @@
+.underline {
+	text-decoration: underline;
+}
+
 .red {
 	color: red;
 }
@@ -24,5 +28,25 @@
 
 .mono {
 	font-family: monospace; 
-	margin-bottom: 1em;
+	/*margin-bottom: 1em;*/
+}
+
+.archive {
+	display: block;
+	width: 80%;
+}
+
+.guess-archive {
+	float: left;
+	width: 50%;
+}
+
+.hints-archive {
+	float: right;
+	width: 50%;
+}
+
+.guess-input {
+	width: 50%;
+	margin: 1em 0 1em 0;
 }
