@@ -2,13 +2,23 @@
 <html>
 <head>
 	<title>Mastermind</title>
+	<link rel="stylesheet" type="text/css" href="mastermind.css">
 </head>
 <body>
 
 <h1>Mastermind Game</h1>
 
-<div style="font-family: monospace; margin-bottom: 1em;">Code : <span class="code"></span></div>
-<div style="font-family: monospace;">Guess: <span class="guesses" ></span></div>
+<h2>Instructions</h2>
+
+<h3>Color Options</h3>
+<p><span class="red">Red.</span> <span class="orange">Orange.</span> <span class="yellow">Yellow.</span> <span class="green">Green.</span> <span class="blue">Blue.</span> <span class="purple">Purple.</span></p>
+
+<p>Guess four colors. There are no repeats.</p>
+<p>Input example: R, G, B, O</p>
+
+<div class="mono">Code : <span id="code"></span></div>
+<div class="mono">Current Guess: <span id="guesses"></span></div>
+<div class="mono">Current Hints: <span id="hints"></span></div>
 
 <script type="text/javascript" src="mastermind.js"></script>
 </body>
