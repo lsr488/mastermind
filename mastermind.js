@@ -20,14 +20,20 @@
 // 4 blue
 // 5 purple
 
-// resetGame should definitely not be in the startGame function
-// but it is until I create a better way to reset code back to zero
 var codeDisplay = document.querySelector("#code");
 var guessesDisplay = document.querySelector("#guesses");
 var hintsDisplay = document.querySelector("#hints");
 var guessesArchiveDisplay = document.querySelector("#guessesArchive");
 var hintsArchiveDisplay = document.querySelector("#hintsArchive");
+var guessInput1 = document.querySelector("#first-guess");
+var guessInput2 = document.querySelector("#second-guess");
+var guessInput3 = document.querySelector("#third-guess");
+var guessInput4 = document.querySelector("#fourth-guess");
+var submitButton = document.querySelector("#submit");
+var turnsLeftDisplay = document.querySelector("#turns-left");
 
+// resetGame should definitely not be in the startGame function
+// but it is until I create a better way to reset code back to zero
 function startGame() {
 	genCode();
 	startGuessLoop();
@@ -36,6 +42,7 @@ function startGame() {
 
 var colors = ["R", "O", "Y", "G", "B", "P"];
 var code = [];
+var guesses = "";
 var guessesArchive = [];
 var hintsArchive = [];
 
@@ -44,12 +51,15 @@ var hintsArchive = [];
 // a limiter on the random number generator
 // and also requiring unique numbers, so it literally
 // has spaces that can't be filled
+
 // TODO: create an option for more colors and a longer code to break
+
 var codeNumber = 4;
-var turnNumber = 1;
+var turnNumber = 4;
 
 function genCode() {
-var tempCode = [];
+	displayTurns();
+	var tempCode = [];
 
 	while(tempCode.length < codeNumber) {
 		var colorSelector = genNum();
@@ -74,6 +84,22 @@ function genNum() {
 	return x;
 }
 
+// TODO: get guesses from each input field on button click
+submitButton.addEventListener("click", function(event) {
+	guesses = "";
+	guesses = guesses + guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value;
+		getGuess();
+	// console.log(guesses);
+});
+
+// guessInput1.addEventListener("keypress", function(event) {
+// 	if(event.key == "Enter") {
+// 		guesses = guesses + guessInput1.value + ",";
+// 		console.log(guesses);
+// 	}
+// });
+
+
 // get user guess and compare guess against code
 // TODO: refactor into 2 functions, getGuess and checkGuess
 function getGuess() {
@@ -85,9 +111,14 @@ function getGuess() {
 	var guessesArchiveString = "";
 	var hintsArchiveString = "";
 
-	var guesses = "r,o,y,g";	
+	console.log("guesses from input:", guesses);
+
+	// var guesses = "r,o,y,g";	
 	// var guesses = window.prompt("Select four colors. There are no repeats. Example: R, G, B, O.");
-	guesses = guesses.toUpperCase().split(",");
+	console.log(typeof guesses);
+	if(typeof guesses == "string") {
+		guesses = guesses.toUpperCase().split(" ");
+	}
 	console.log("guess:", guesses);
 
 // check if exact match between code[i] and guesses[i]
@@ -109,10 +140,12 @@ function getGuess() {
 	console.log("Number of colors included:", isInCode); // white key peg
 	console.log(hints);
 
+	// for guess archive display
 	for(var i = 0; i < guessesArchive.length; i++) {
 		guessesArchiveString += guessesArchive[i].join(", ") + "<br>";
 	}
 
+	// for hints archive display
 	for(var j = 0; j < hintsArchive.length; j++) {
 		hintsArchiveString += hintsArchive[j].sort().join(" ") + "<br>";
 	}
@@ -128,13 +161,56 @@ function getGuess() {
 	guessesArchiveDisplay.innerHTML = guessesArchiveString;
 	hintsArchiveDisplay.innerHTML = hintsArchiveString;
 
+	turnNumber--;
+	displayTurns();
+	isWon(isExactMatch);
+	isOutOfTurns();
 }
 
-function startGuessLoop() {
-	while(turnNumber > 0) {
-		getGuess();
-		turnNumber--;
+// function startGuessLoop() {
+// 	// while turnNumber > 0 && isWon() == false 
+// 	while(turnNumber > 0) {
+// 		getGuess();
+// 		turnNumber--;
+// 	}
+// 	// FIXME
+// 	if(isWon) {
+// 		console.log("winner")
+// 	}
+// 	guessInput1.setAttribute("disabled", "disabled");
+// 	guessInput2.setAttribute("disabled", "disabled");
+// 	guessInput3.setAttribute("disabled", "disabled");
+// 	guessInput4.setAttribute("disabled", "disabled");
+// 	submitButton.setAttribute("disabled", "disabled");
+// 	console.log(turnNumber);
+// }
+
+function isWon(isExactMatch) {
+	// if exactmatch == 4
+	if(isExactMatch == 4) {
+		console.log("you won!");
+		guessInput1.setAttribute("disabled", "disabled");
+		guessInput2.setAttribute("disabled", "disabled");
+		guessInput3.setAttribute("disabled", "disabled");
+		guessInput4.setAttribute("disabled", "disabled");
+		submitButton.setAttribute("disabled", "disabled");		
+		return true;
 	}
+}
+
+function isOutOfTurns() {
+	if(turnNumber == 0) {
+		console.log("out of turns");
+		guessInput1.setAttribute("disabled", "disabled");
+		guessInput2.setAttribute("disabled", "disabled");
+		guessInput3.setAttribute("disabled", "disabled");
+		guessInput4.setAttribute("disabled", "disabled");
+		submitButton.setAttribute("disabled", "disabled");		
+	}
+}
+
+function displayTurns() {
+	turnsLeftDisplay.textContent = turnNumber;
 }
 
 function resetGame() {
@@ -153,4 +229,5 @@ function resetGame() {
 	// hintsArchiveDisplay.innerHTML = "";
 }
 
-startGame();
+// startGame();
+genCode();
