@@ -53,7 +53,7 @@ var hintsArchive = [];
 // TODO: create an option for more colors and a longer code to break
 
 var codeNumber = 4;
-var turnNumber = 4;
+var turnNumber = 10;
 
 function genCode() {
 	displayTurns();
@@ -141,7 +141,7 @@ function getGuess() {
 
 	// for hints archive display
 	for(var j = 0; j < hintsArchive.length; j++) {
-		hintsArchiveString += '<div class="hint">' + hintsArchive[j].sort().join(" ") + "</div><br>";
+		hintsArchiveString += '<div class="hint">' + hintsArchive[j].sort().join(" ") + "</div>";
 	}
 
 	// console.log(guessesArchiveString + hintsArchiveString)
