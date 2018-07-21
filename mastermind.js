@@ -131,8 +131,29 @@ function getGuess() {
 	console.log("guesses archive:", guessesArchive);
 	guessesArchive.forEach(function(element) {
 		console.log("guesses archive element:", element);
+
 		for(var i = 0; i < element.length; i++) {
-			guessesArchiveString += `<div class="boxes">${element[i]}</div> `;
+			var archiveClass = "";
+			if(element[i] == "R") {
+				archiveClass = "red-bg";
+			}		
+			else if(element[i] == "O") {
+				archiveClass = "orange-bg";
+			}		
+			else if(element[i] == "Y") {
+				archiveClass = "yellow-bg";
+			}		
+			else if(element[i] == "G") {
+				archiveClass = "green-bg";
+			}		
+			else if(element[i] == "B") {
+				archiveClass = "blue-bg";
+			}		
+			else if(element[i] == "P") {
+				archiveClass = "purple-bg";
+			}				
+
+			guessesArchiveString += `<div class="boxes ${archiveClass}">${element[i]}</div> `;
 		}
 		guessesArchiveString += `<br>`;
 	});
@@ -192,27 +213,29 @@ function assignBgColor(guesses, display, index) {
 	}		
 	else if(guesses[index] == "P") {
 		display.classList.add("purple-bg");
-	}		
+	}
 }
 
-function assignArchiveColor(guesses, display, index) {
-	if(guesses[index] == "R") {
-		display.classList.add("red-bg");
+function assignArchiveColor(element, index) {
+	var archiveClass = "";
+
+	if(element[index] == "R") {
+		archiveClass = "red-bg";
 	}		
-	else if(guesses[index] == "O") {
-		display.classList.add("orange-bg");
+	else if(element[index] == "O") {
+		archiveClass = "orange-bg";
 	}		
-	else if(guesses[index] == "Y") {
-		display.classList.add("yellow-bg");
+	else if(element[index] == "Y") {
+		archiveClass = "yellow-bg";
 	}		
-	else if(guesses[index] == "G") {
-		display.classList.add("green-bg");
+	else if(element[index] == "G") {
+		archiveClass = "green-bg";
 	}		
-	else if(guesses[index] == "B") {
-		display.classList.add("blue-bg");
+	else if(element[index] == "B") {
+		archiveClass = "blue-bg";
 	}		
-	else if(guesses[index] == "P") {
-		display.classList.add("purple-bg");
+	else if(element[index] == "P") {
+		archiveClass = "purple-bg";
 	}	
 }
 
