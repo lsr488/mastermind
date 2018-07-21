@@ -33,14 +33,6 @@ var submitButton = document.querySelector("#submit");
 var turnsLeftDisplay = document.querySelector("#turns-left");
 var statusDisplay = document.querySelector("#status-display");
 
-// resetGame should definitely not be in the startGame function
-// but it is until I create a better way to reset code back to zero
-// function startGame() {
-// 	genCode();
-// 	startGuessLoop();
-// 	// resetGame();
-// }
-
 var colors = ["R", "O", "Y", "G", "B", "P"];
 var code = [];
 var guesses = "";
@@ -85,7 +77,7 @@ function genNum() {
 	return x;
 }
 
-// TODO: get guesses from each input field on button click
+// TODO make this more flexible for more input options
 submitButton.addEventListener("click", function(event) {
 	guesses = "";
 	guesses = guesses + guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value;

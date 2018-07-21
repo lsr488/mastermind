@@ -1,3 +1,12 @@
+input {
+	width: 15%;
+	text-align: center;
+}
+
+body {
+	font-family: monospace;
+}
+
 .underline {
 	text-decoration: underline;
 }
@@ -57,13 +66,4 @@
 
 .active {
 	display: none;
-}
-
-input {
-	width: 15%;
-	text-align: center;
-}
-
-body {
-	font-family: monospace;
 }
