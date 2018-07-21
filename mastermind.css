@@ -50,3 +50,12 @@
 	width: 50%;
 	margin: 1em 0 1em 0;
 }
+
+.container {
+	width: 80%;
+}
+
+input {
+	width: 15%;
+	text-align: center;
+}
