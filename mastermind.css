@@ -5,6 +5,16 @@ input {
 
 body {
 	font-family: monospace;
+	margin: 0;
+	padding: 0;
+	background-color: whitesmoke;
+}
+
+.container {
+	width: 600px;
+	height: 800px;
+	margin: auto auto;
+	/*background-color: snow;*/
 }
 
 .underline {
@@ -20,7 +30,7 @@ body {
 }
 
 .yellow {
-	color: goldenrod;
+	color: gold;
 }
 
 .green {
@@ -37,31 +47,25 @@ body {
 
 .mono {
 	font-family: monospace; 
-	/*margin-bottom: 1em;*/
+}
+
+.game-area {
 }
 
 .archive {
-	display: block;
-	width: 80%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 }
 
 .guess-archive {
-	float: left;
-	width: 50%;
 }
 
 .hints-archive {
-	float: right;
-	width: 50%;
 }
 
 .guess-input {
 	width: 50%;
 	margin: 1em 0 1em 0;
-}
-
-.container {
-	width: 80%;
 }
 
 .active {
