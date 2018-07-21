@@ -21,8 +21,13 @@
 // 5 purple
 
 var codeDisplay = document.querySelector("#code");
+var codeContainerDisplay = document.querySelector("#code-container");
 var guessesDisplay = document.querySelector("#guesses");
 var hintsDisplay = document.querySelector("#hints");
+var firstColor = document.querySelector("#first-color");
+var secondColor = document.querySelector("#second-color");
+var thirdColor = document.querySelector("#third-color");
+var fourthColor = document.querySelector("#fourth-color");
 var guessesArchiveDisplay = document.querySelector("#guessesArchive");
 var hintsArchiveDisplay = document.querySelector("#hintsArchive");
 var guessInput1 = document.querySelector("#first-guess");
@@ -85,13 +90,6 @@ submitButton.addEventListener("click", function(event) {
 	// console.log(guesses);
 });
 
-// guessInput1.addEventListener("keypress", function(event) {
-// 	if(event.key == "Enter") {
-// 		guesses = guesses + guessInput1.value + ",";
-// 		console.log(guesses);
-// 	}
-// });
-
 
 // get user guess and compare guess against code
 // TODO: refactor into 2 functions, getGuess and checkGuess
@@ -107,11 +105,7 @@ function getGuess() {
 	console.log("guesses from input:", guesses);
 
 	// var guesses = "r,o,y,g";	
-	// var guesses = window.prompt("Select four colors. There are no repeats. Example: R, G, B, O.");
-	console.log(typeof guesses);
-	if(typeof guesses == "string") {
-		guesses = guesses.toUpperCase().split(" ");
-	}
+	guesses = guesses.toUpperCase().split(" ");
 	console.log("guess:", guesses);
 
 // check if exact match between code[i] and guesses[i]
@@ -134,13 +128,20 @@ function getGuess() {
 	console.log(hints);
 
 	// for guess archive display
-	for(var i = 0; i < guessesArchive.length; i++) {
-		guessesArchiveString += guessesArchive[i].join(", ") + "<br>";
-	}
+	console.log("guesses archive:", guessesArchive);
+	guessesArchive.forEach(function(element) {
+		console.log("guesses archive element:", element);
+		for(var i = 0; i < element.length; i++) {
+			guessesArchiveString += `<div class="boxes">${element[i]}</div> `;
+		}
+		guessesArchiveString += `<br>`;
+	});
+
+	console.log("guess archive string:", guessesArchiveString);
 
 	// for hints archive display
 	for(var j = 0; j < hintsArchive.length; j++) {
-		hintsArchiveString += hintsArchive[j].sort().join(" ") + "<br>";
+		hintsArchiveString += '<div class="hint">' + hintsArchive[j].sort().join(" ") + "</div><br>";
 	}
 
 	// console.log(guessesArchiveString + hintsArchiveString)
@@ -149,10 +150,22 @@ function getGuess() {
 	// console.log(hintsArchiveString);
 
 	// display guesses on webpage
-	guessesDisplay.textContent = guesses.join(", ");
+	firstColor.textContent = guessInput1.value.toUpperCase();
+	secondColor.textContent = guessInput2.value.toUpperCase();
+	thirdColor.textContent = guessInput3.value.toUpperCase();
+	fourthColor.textContent = guessInput4.value.toUpperCase();
+	// guessesDisplay.textContent = guesses.join(", ");
 	hintsDisplay.textContent = hints.sort().join(" ");
 	guessesArchiveDisplay.innerHTML = guessesArchiveString;
 	hintsArchiveDisplay.innerHTML = hintsArchiveString;
+
+
+	// toggle color-bg class based on guesses[i] content
+	// TODO: figure out how to make it more flexible
+	assignBgColor(guesses, firstColor, 0);
+	assignBgColor(guesses, secondColor, 1);
+	assignBgColor(guesses, thirdColor, 2);
+	assignBgColor(guesses, fourthColor, 3);
 
 	turnNumber--;
 	displayTurns();
@@ -160,28 +173,54 @@ function getGuess() {
 	isOutOfTurns();
 }
 
-// function startGuessLoop() {
-// 	// while turnNumber > 0 && isWon() == false 
-// 	while(turnNumber > 0) {
-// 		getGuess();
-// 		turnNumber--;
-// 	}
-// 	// FIXME
-// 	if(isWon) {
-// 		console.log("winner")
-// 	}
-// 	guessInput1.setAttribute("disabled", "disabled");
-// 	guessInput2.setAttribute("disabled", "disabled");
-// 	guessInput3.setAttribute("disabled", "disabled");
-// 	guessInput4.setAttribute("disabled", "disabled");
-// 	submitButton.setAttribute("disabled", "disabled");
-// 	console.log(turnNumber);
-// }
+function assignBgColor(guesses, display, index) {
+	display.setAttribute("class", "boxes");
+	if(guesses[index] == "R") {
+		display.classList.add("red-bg");
+	}		
+	else if(guesses[index] == "O") {
+		display.classList.add("orange-bg");
+	}		
+	else if(guesses[index] == "Y") {
+		display.classList.add("yellow-bg");
+	}		
+	else if(guesses[index] == "G") {
+		display.classList.add("green-bg");
+	}		
+	else if(guesses[index] == "B") {
+		display.classList.add("blue-bg");
+	}		
+	else if(guesses[index] == "P") {
+		display.classList.add("purple-bg");
+	}		
+}
+
+function assignArchiveColor(guesses, display, index) {
+	if(guesses[index] == "R") {
+		display.classList.add("red-bg");
+	}		
+	else if(guesses[index] == "O") {
+		display.classList.add("orange-bg");
+	}		
+	else if(guesses[index] == "Y") {
+		display.classList.add("yellow-bg");
+	}		
+	else if(guesses[index] == "G") {
+		display.classList.add("green-bg");
+	}		
+	else if(guesses[index] == "B") {
+		display.classList.add("blue-bg");
+	}		
+	else if(guesses[index] == "P") {
+		display.classList.add("purple-bg");
+	}	
+}
 
 function isWon(isExactMatch) {
 	// if exactmatch == 4
 	if(isExactMatch == 4) {
 		disableInputs();
+		// codeContainerDisplay.classList.toggle("active")
 		statusDisplay.classList.toggle("active")
 		statusDisplay.textContent = "You won!";
 	}
@@ -190,6 +229,7 @@ function isWon(isExactMatch) {
 function isOutOfTurns() {
 	if(turnNumber == 0) {
 		disableInputs();
+		// codeContainerDisplay.classList.toggle("active")
 		statusDisplay.classList.toggle("active")
 		statusDisplay.textContent = "You're out of turns.";
 	}
@@ -207,13 +247,13 @@ function displayTurns() {
 	turnsLeftDisplay.textContent = turnNumber;
 }
 
-function resetGame() {
-	tempCode = [];
-	code = [];
-	guesses = [];
-	guessesArchive = [];
+// function resetGame() {
+	// tempCode = [];
+	// code = [];
+	// guesses = [];
+	// guessesArchive = [];
 	// guessesArchiveString = "";
-	hintsArchive = [];
+	// hintsArchive = [];
 	// hintsArchiveString = "";
 	// codeDisplay.textContent = "";
 	// guessesDisplay.textContent = "";
@@ -221,7 +261,7 @@ function resetGame() {
 	// hintsDisplay.textContent = "";
 	// guessesArchiveDisplay.innerHTML = "";
 	// hintsArchiveDisplay.innerHTML = "";
-}
+// }
 
 // startGame();
 genCode();
