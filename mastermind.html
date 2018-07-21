@@ -13,10 +13,11 @@
 
 	<p>Guess four colors. There are no repeats. Input example: R, G, B, O</p>
 
-	<div class="mono">Turns Left: <span id="turns-left"></span></div>
-	<div class="mono">Code : <span id="code"></span></div>
-	<div class="mono">Guess: <span id="guesses"></span> 
-	<div class="mono">Hints: <span id="hints"></span></div>
+	<p class="active" id="status-display">test</p>
+
+	<div>Code : <span id="code"></span></div>
+	<div>Guess: <span id="guesses"></span> 
+	<div>Hints: <span id="hints"></span></div>
 
 	<fieldset class="guess-input">
 		<legend>Your guess:</legend>
@@ -29,17 +30,18 @@
 		</div>
 	</fieldset>
 
+	<p>Turns Left: <span id="turns-left"></span></p>
+
 	<div class="archive">
-		<div class="mono guess-archive">
+		<div class="guess-archive">
 			<p>Guess Archive:</p>
 			<span id="guessesArchive"></span>
 		</div>
-		<div class="mono hints-archive">
+		<div class="hints-archive">
 			<p>Hints Archive:</p>
 			<span id="hintsArchive"></span>
 		</div>
 </div>
-<!-- <div class="mono">Current </div> -->
 </div>
 
 <script type="text/javascript" src="mastermind.js"></script>

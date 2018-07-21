@@ -55,7 +55,15 @@
 	width: 80%;
 }
 
+.active {
+	display: none;
+}
+
 input {
 	width: 15%;
 	text-align: center;
+}
+
+body {
+	font-family: monospace;
 }

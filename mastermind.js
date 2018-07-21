@@ -31,14 +31,15 @@ var guessInput3 = document.querySelector("#third-guess");
 var guessInput4 = document.querySelector("#fourth-guess");
 var submitButton = document.querySelector("#submit");
 var turnsLeftDisplay = document.querySelector("#turns-left");
+var statusDisplay = document.querySelector("#status-display");
 
 // resetGame should definitely not be in the startGame function
 // but it is until I create a better way to reset code back to zero
-function startGame() {
-	genCode();
-	startGuessLoop();
-	// resetGame();
-}
+// function startGame() {
+// 	genCode();
+// 	startGuessLoop();
+// 	// resetGame();
+// }
 
 var colors = ["R", "O", "Y", "G", "B", "P"];
 var code = [];
@@ -188,25 +189,26 @@ function getGuess() {
 function isWon(isExactMatch) {
 	// if exactmatch == 4
 	if(isExactMatch == 4) {
-		console.log("you won!");
-		guessInput1.setAttribute("disabled", "disabled");
-		guessInput2.setAttribute("disabled", "disabled");
-		guessInput3.setAttribute("disabled", "disabled");
-		guessInput4.setAttribute("disabled", "disabled");
-		submitButton.setAttribute("disabled", "disabled");		
-		return true;
+		disableInputs();
+		statusDisplay.classList.toggle("active")
+		statusDisplay.textContent = "You won!";
 	}
 }
 
 function isOutOfTurns() {
 	if(turnNumber == 0) {
-		console.log("out of turns");
-		guessInput1.setAttribute("disabled", "disabled");
-		guessInput2.setAttribute("disabled", "disabled");
-		guessInput3.setAttribute("disabled", "disabled");
-		guessInput4.setAttribute("disabled", "disabled");
-		submitButton.setAttribute("disabled", "disabled");		
+		disableInputs();
+		statusDisplay.classList.toggle("active")
+		statusDisplay.textContent = "You're out of turns.";
 	}
+}
+
+function disableInputs() {
+	guessInput1.setAttribute("disabled", "disabled");
+	guessInput2.setAttribute("disabled", "disabled");
+	guessInput3.setAttribute("disabled", "disabled");
+	guessInput4.setAttribute("disabled", "disabled");
+	submitButton.setAttribute("disabled", "disabled");
 }
 
 function displayTurns() {
