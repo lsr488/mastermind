@@ -6,27 +6,41 @@
 </head>
 <body>
 
-<h1>Mastermind Game</h1>
+<div class="container">
+	<h1>Mastermind Game</h1>
 
-<h2><span class="red"><span class="underline">R</span>ed.</span> <span class="orange"><span class="underline">O</span>range.</span> <span class="yellow"><span class="underline">Y</span>ellow.</span> <span class="green"><span class="underline">G</span>reen.</span> <span class="blue"><span class="underline">B</span>lue.</span> <span class="purple"><span class="underline">P</span>urple.</span></h2>
+	<h2><span class="red"><span class="underline">R</span>ed.</span> <span class="orange"><span class="underline">O</span>range.</span> <span class="yellow"><span class="underline">Y</span>ellow.</span> <span class="green"><span class="underline">G</span>reen.</span> <span class="blue"><span class="underline">B</span>lue.</span> <span class="purple"><span class="underline">P</span>urple.</span></h2>
 
-<p>Guess four colors. There are no repeats. Input example: R, G, B, O</p>
+	<p>Guess four colors. There are no repeats. Input example: R, G, B, O</p>
 
-<div class="mono">Code : <span id="code"></span></div>
-<div class="mono">Guess: <span id="guesses"></span> 
-<div class="mono">Hints: <span id="hints"></span></div>
+	<div class="mono">Turns Left: <span id="turns-left"></span></div>
+	<div class="mono">Code : <span id="code"></span></div>
+	<div class="mono">Guess: <span id="guesses"></span> 
+	<div class="mono">Hints: <span id="hints"></span></div>
 
-<div class="archive">
-	<div class="mono guess-archive">
-		<p>Guess Archive:</p>
-		<span id="guessesArchive"></span>
-	</div>
-	<div class="mono hints-archive">
-		<p>Hints Archive:</p>
-		<span id="hintsArchive"></span>
-	</div>
+	<fieldset class="guess-input">
+		<legend>Your guess:</legend>
+		<div>
+			<input type="text" name="first-guess" id="first-guess" placeholder="R">
+			<input type="text" name="second-guess" id="second-guess" placeholder="O">
+			<input type="text" name="third-guess" id="third-guess" placeholder="Y">
+			<input type="text" name="fourth-guess" id="fourth-guess" placeholder="G">
+			<button id="submit" name="submit" type="submit" value="submit-true">Submit</button>
+		</div>
+	</fieldset>
+
+	<div class="archive">
+		<div class="mono guess-archive">
+			<p>Guess Archive:</p>
+			<span id="guessesArchive"></span>
+		</div>
+		<div class="mono hints-archive">
+			<p>Hints Archive:</p>
+			<span id="hintsArchive"></span>
+		</div>
 </div>
 <!-- <div class="mono">Current </div> -->
+</div>
 
 <script type="text/javascript" src="mastermind.js"></script>
 </body>
