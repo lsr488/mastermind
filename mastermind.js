@@ -221,23 +221,23 @@ function displayTurns() {
 	turnsLeftDisplay.textContent = turnNumber;
 }
 
-function isWon(isExactMatch) {
-	if(isExactMatch == 4) {
-		endOfGameDisplay();
-		disableInputs();
-		statusDisplay();
-		statusDisplay.textContent = "You won!";
-	}
-}
+// function isWon(isExactMatch) {
+// 	if(isExactMatch == 4) {
+// 		endOfGameDisplay();
+// 		disableInputs();
+// 		statusDisplay();
+// 		statusDisplay.textContent = "You won!";
+// 	}
+// }
 
-function isOutOfTurns() {
-	if(turnNumber == 0) {
-		endOfGameDisplay();
-		disableInputs();
-		statusDisplay();
-		statusDisplay.textContent = "You're out of turns.";
-	}
-}
+// function isOutOfTurns() {
+// 	if(turnNumber == 0) {
+// 		endOfGameDisplay();
+// 		disableInputs();
+// 		statusDisplay();
+// 		statusDisplay.textContent = "You're out of turns.";
+// 	}
+// }
 
 function isGameOver(isExactMatch) {
 	if(isExactMatch == 4) {
