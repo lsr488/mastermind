@@ -17,6 +17,19 @@ body {
 	/*background-color: snow;*/
 }
 
+@media (max-width: 600px) {
+	.container {
+	width: 400px;
+	height: 600px;
+	margin: auto auto;
+	/*background-color: blue;*/
+	}
+}
+
+.colors {
+	line-height: 150%;
+}
+
 .underline {
 	text-decoration: underline;
 }
@@ -50,37 +63,7 @@ body {
 	background-color: purple;
 	color: whitesmoke;
 }
-/*
-.red-bg {
-	background-color: red;
-	color: whitesmoke;
-}
 
-.orange-bg {
-	background-color: orange;
-	color: whitesmoke;
-}
-
-.yellow-bg {
-	background-color: gold;
-	color: whitesmoke;
-}
-
-.green-bg {
-	background-color: green;
-	color: whitesmoke;
-}
-
-.blue-bg {
-	background-color: blue;
-	color: whitesmoke;
-}
-
-.purple-bg {
-	background-color: purple;
-	color: whitesmoke;
-}
-*/
 .mono {
 	font-family: monospace; 
 }
@@ -106,15 +89,24 @@ body {
 	margin: 3px 0 3px 0;
 }
 
+.hints-display {
+	line-height: 2em;
+	vertical-align: middle;
+}
+
 .archive {
+	/*display: flex;*/
 	display: grid;
+	flex-direction: row;
 	grid-template-columns: 1fr 1fr;
+	grid-column-gap: 10px;
 }
 
 .guess-archive {
 }
 
 .hints-archive {
+	margin-left: 10%;
 }
 
 .hint {

@@ -27,7 +27,7 @@ var secondCode = document.querySelector("#second-code");
 var thirdCode = document.querySelector("#third-code");
 var fourthCode = document.querySelector("#fourth-code");
 var guessesDisplay = document.querySelector("#guesses");
-var hintsDisplay = document.querySelector("#hints");
+var hintsDisplay = document.querySelector(".hints-display");
 var firstColor = document.querySelector("#first-color");
 var secondColor = document.querySelector("#second-color");
 var thirdColor = document.querySelector("#third-color");
@@ -189,8 +189,9 @@ function getGuess() {
 
 	turnNumber--;
 	displayTurns();
-	isWon(isExactMatch);
-	isOutOfTurns();
+	isGameOver(isExactMatch);
+	// isWon(isExactMatch);
+	// isOutOfTurns();
 }
 
 // add color-bg class based on guesses[i] content
@@ -216,13 +217,15 @@ function assignBgColor(guesses, display, index) {
 	}
 }
 
+function displayTurns() {
+	turnsLeftDisplay.textContent = turnNumber;
+}
+
 function isWon(isExactMatch) {
-	// if exactmatch == 4
 	if(isExactMatch == 4) {
 		endOfGameDisplay();
 		disableInputs();
-		codeContainerDisplay.classList.toggle("active")
-		statusDisplay.classList.toggle("active")
+		statusDisplay();
 		statusDisplay.textContent = "You won!";
 	}
 }
@@ -231,8 +234,21 @@ function isOutOfTurns() {
 	if(turnNumber == 0) {
 		endOfGameDisplay();
 		disableInputs();
-		codeContainerDisplay.classList.toggle("active")
-		statusDisplay.classList.toggle("active")
+		statusDisplay();
+		statusDisplay.textContent = "You're out of turns.";
+	}
+}
+
+function isGameOver(isExactMatch) {
+	if(isExactMatch == 4) {
+		endOfGameDisplay();
+		disableInputs();
+		endofGameStatusDisplay();
+		statusDisplay.textContent = "You won!";
+	} else if(turnNumber == 0) {
+		endOfGameDisplay();
+		disableInputs();
+		endofGameStatusDisplay();
 		statusDisplay.textContent = "You're out of turns.";
 	}
 }
@@ -243,6 +259,11 @@ function disableInputs() {
 	guessInput3.setAttribute("disabled", "disabled");
 	guessInput4.setAttribute("disabled", "disabled");
 	submitButton.setAttribute("disabled", "disabled");
+}
+
+function endofGameStatusDisplay() {
+	codeContainerDisplay.classList.toggle("active");
+	statusDisplay.classList.toggle("active");
 }
 
 function endOfGameDisplay() {
@@ -256,10 +277,6 @@ function endOfGameDisplay() {
 	assignBgColor(code, secondCode, 1);
 	assignBgColor(code, thirdCode, 2);
 	assignBgColor(code, fourthCode, 3);
-}
-
-function displayTurns() {
-	turnsLeftDisplay.textContent = turnNumber;
 }
 
 genCode();
