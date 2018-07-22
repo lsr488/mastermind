@@ -22,29 +22,35 @@ body {
 }
 
 .red {
-	color: red;
+	background-color: red;
+	color: whitesmoke;
 }
 
 .orange {
-	color: orange;
+	background-color: orange;
+	color: whitesmoke;
 }
 
 .yellow {
-	color: gold;
+	background-color: gold;
+	color: whitesmoke;
 }
 
 .green {
-	color: green;
+	background-color: green;
+	color: whitesmoke;
 }
 
 .blue {
-	color: blue;
+	background-color: blue;
+	color: whitesmoke;
 }
 
 .purple {
-	color: purple;
+	background-color: purple;
+	color: whitesmoke;
 }
-
+/*
 .red-bg {
 	background-color: red;
 	color: whitesmoke;
@@ -74,7 +80,7 @@ body {
 	background-color: purple;
 	color: whitesmoke;
 }
-
+*/
 .mono {
 	font-family: monospace; 
 }

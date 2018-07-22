@@ -72,11 +72,12 @@ function genCode() {
 	tempCode.forEach(function(el) {
 		code.push(colors[el]);
 	});
-	console.log("code :", code);
+	// console.log("code :", code);
 
 	// display the code on the website
 	// codeDisplay.textContent = code.join(", ");
 
+	// TODO can these be more flexible?
 	firstCode.textContent = code[0];
 	secondCode.textContent = code[1];
 	thirdCode.textContent = code[2];
@@ -117,20 +118,20 @@ function getGuess() {
 	var guessesArchiveString = "";
 	var hintsArchiveString = "";
 
-	console.log("guesses from input:", guesses);
+	// console.log("guesses from input:", guesses);
 
 	// var guesses = "r,o,y,g";	
 	guesses = guesses.toUpperCase().split(" ");
-	console.log("guess:", guesses);
+	// console.log("guess:", guesses);
 
 // check if exact match between code[i] and guesses[i]
 	for(var i = 0; i < guesses.length; i++) {
 		if(guesses[i] == code[i]) {
-			console.log("match!", guesses[i], code[i]); // black key peg
+			// console.log("match!", guesses[i], code[i]); // black key peg
 			isExactMatch++;
 			hints.push("*");
 		} else if(code.includes(guesses[i])) {
-			console.log(guesses[i] + " is in the code."); // white key peg
+			// console.log(guesses[i] + " is in the code."); // white key peg
 			isInCode++;
 			hints.push("o");
 		}
@@ -138,42 +139,41 @@ function getGuess() {
 	guessesArchive.push(guesses);
 	hintsArchive.push(hints);
 
-	console.log("Number of exact matches:", isExactMatch); // black key peg
-	console.log("Number of colors included:", isInCode); // white key peg
-	console.log(hints);
+	// console.log("Number of exact matches:", isExactMatch); // black key peg
+	// console.log("Number of colors included:", isInCode); // white key peg
+	// console.log(hints);
 
 	// for guess archive display
 	console.log("guesses archive:", guessesArchive);
 	guessesArchive.forEach(function(element) {
-		console.log("guesses archive element:", element);
+		// console.log("guesses archive element:", element);
 
 		for(var i = 0; i < element.length; i++) {
 			var archiveClass = "";
 			if(element[i] == "R") {
-				archiveClass = "red-bg";
+				archiveClass = "red";
 			}		
 			else if(element[i] == "O") {
-				archiveClass = "orange-bg";
+				archiveClass = "orange";
 			}		
 			else if(element[i] == "Y") {
-				archiveClass = "yellow-bg";
+				archiveClass = "yellow";
 			}		
 			else if(element[i] == "G") {
-				archiveClass = "green-bg";
+				archiveClass = "green";
 			}		
 			else if(element[i] == "B") {
-				archiveClass = "blue-bg";
+				archiveClass = "blue";
 			}		
 			else if(element[i] == "P") {
-				archiveClass = "purple-bg";
+				archiveClass = "purple";
 			}				
-
 			guessesArchiveString += `<div class="boxes ${archiveClass}">${element[i]}</div> `;
 		}
 		guessesArchiveString += `<br>`;
 	});
 
-	console.log("guess archive string:", guessesArchiveString);
+	// console.log("guess archive string:", guessesArchiveString);
 
 	// for hints archive display
 	for(var j = 0; j < hintsArchive.length; j++) {
@@ -195,8 +195,6 @@ function getGuess() {
 	guessesArchiveDisplay.innerHTML = guessesArchiveString;
 	hintsArchiveDisplay.innerHTML = hintsArchiveString;
 
-
-	// toggle color-bg class based on guesses[i] content
 	// TODO: figure out how to make it more flexible
 	assignBgColor(guesses, firstColor, 0);
 	assignBgColor(guesses, secondColor, 1);
@@ -209,57 +207,34 @@ function getGuess() {
 	isOutOfTurns();
 }
 
+// add color-bg class based on guesses[i] content
 function assignBgColor(guesses, display, index) {
 	display.setAttribute("class", "boxes");
 	if(guesses[index] == "R") {
-		display.classList.add("red-bg");
+		display.classList.add("red");
 	}		
 	else if(guesses[index] == "O") {
-		display.classList.add("orange-bg");
+		display.classList.add("orange");
 	}		
 	else if(guesses[index] == "Y") {
-		display.classList.add("yellow-bg");
+		display.classList.add("yellow");
 	}		
 	else if(guesses[index] == "G") {
-		display.classList.add("green-bg");
+		display.classList.add("green");
 	}		
 	else if(guesses[index] == "B") {
-		display.classList.add("blue-bg");
+		display.classList.add("blue");
 	}		
 	else if(guesses[index] == "P") {
-		display.classList.add("purple-bg");
+		display.classList.add("purple");
 	}
 }
-
-// function assignArchiveColor(guesses, i) {
-	// var archiveClass = "";
-	// if(guesses[i] == "R") {
-	// 	archiveClass = "red-bg";
-	// }
-	// else if(guesses[i] == "O") {
-	// 	console.log("orange-bg");
-	// }		
-	// else if(guesses[i] == "Y") {
-	// 	archiveClass = "yellow-bg";
-	// }		
-	// else if(guesses[i] == "G") {
-	// 	archiveClass = "green-bg";
-	// }		
-	// else if(guesses[i] == "B") {
-	// 	archiveClass = "blue-bg";
-	// }		
-	// else if(guesses[i] == "P") {
-	// 	archiveClass = "purple-bg";
-	// }
-	// console.log("assignArchiveColor guesses:", guesses);
-	// console.log("assignArchiveColor guesses[i]:", guesses[i]);
-// }
 
 function isWon(isExactMatch) {
 	// if exactmatch == 4
 	if(isExactMatch == 4) {
 		disableInputs();
-		// codeContainerDisplay.classList.toggle("active")
+		codeContainerDisplay.classList.toggle("active")
 		statusDisplay.classList.toggle("active")
 		statusDisplay.textContent = "You won!";
 	}
@@ -268,7 +243,7 @@ function isWon(isExactMatch) {
 function isOutOfTurns() {
 	if(turnNumber == 0) {
 		disableInputs();
-		// codeContainerDisplay.classList.toggle("active")
+		codeContainerDisplay.classList.toggle("active")
 		statusDisplay.classList.toggle("active")
 		statusDisplay.textContent = "You're out of turns.";
 	}
@@ -286,21 +261,4 @@ function displayTurns() {
 	turnsLeftDisplay.textContent = turnNumber;
 }
 
-// function resetGame() {
-	// tempCode = [];
-	// code = [];
-	// guesses = [];
-	// guessesArchive = [];
-	// guessesArchiveString = "";
-	// hintsArchive = [];
-	// hintsArchiveString = "";
-	// codeDisplay.textContent = "";
-	// guessesDisplay.textContent = "";
-	// guessesDisplay.textContent = "";
-	// hintsDisplay.textContent = "";
-	// guessesArchiveDisplay.innerHTML = "";
-	// hintsArchiveDisplay.innerHTML = "";
-// }
-
-// startGame();
 genCode();
