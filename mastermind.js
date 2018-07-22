@@ -22,6 +22,10 @@
 
 var codeDisplay = document.querySelector("#code");
 var codeContainerDisplay = document.querySelector("#code-container");
+var firstCode = document.querySelector("#first-code");
+var secondCode = document.querySelector("#second-code");
+var thirdCode = document.querySelector("#third-code");
+var fourthCode = document.querySelector("#fourth-code");
 var guessesDisplay = document.querySelector("#guesses");
 var hintsDisplay = document.querySelector("#hints");
 var firstColor = document.querySelector("#first-color");
@@ -71,7 +75,18 @@ function genCode() {
 	console.log("code :", code);
 
 	// display the code on the website
-	codeDisplay.textContent = code.join(", ");
+	// codeDisplay.textContent = code.join(", ");
+
+	firstCode.textContent = code[0];
+	secondCode.textContent = code[1];
+	thirdCode.textContent = code[2];
+	fourthCode.textContent = code[3];
+
+	assignBgColor(code, firstCode, 0);
+	assignBgColor(code, secondCode, 1);
+	assignBgColor(code, thirdCode, 2);
+	assignBgColor(code, fourthCode, 3);
+
 	return code;
 }
 
@@ -216,28 +231,29 @@ function assignBgColor(guesses, display, index) {
 	}
 }
 
-function assignArchiveColor(element, index) {
-	var archiveClass = "";
-
-	if(element[index] == "R") {
-		archiveClass = "red-bg";
-	}		
-	else if(element[index] == "O") {
-		archiveClass = "orange-bg";
-	}		
-	else if(element[index] == "Y") {
-		archiveClass = "yellow-bg";
-	}		
-	else if(element[index] == "G") {
-		archiveClass = "green-bg";
-	}		
-	else if(element[index] == "B") {
-		archiveClass = "blue-bg";
-	}		
-	else if(element[index] == "P") {
-		archiveClass = "purple-bg";
-	}	
-}
+// function assignArchiveColor(guesses, i) {
+	// var archiveClass = "";
+	// if(guesses[i] == "R") {
+	// 	archiveClass = "red-bg";
+	// }
+	// else if(guesses[i] == "O") {
+	// 	console.log("orange-bg");
+	// }		
+	// else if(guesses[i] == "Y") {
+	// 	archiveClass = "yellow-bg";
+	// }		
+	// else if(guesses[i] == "G") {
+	// 	archiveClass = "green-bg";
+	// }		
+	// else if(guesses[i] == "B") {
+	// 	archiveClass = "blue-bg";
+	// }		
+	// else if(guesses[i] == "P") {
+	// 	archiveClass = "purple-bg";
+	// }
+	// console.log("assignArchiveColor guesses:", guesses);
+	// console.log("assignArchiveColor guesses[i]:", guesses[i]);
+// }
 
 function isWon(isExactMatch) {
 	// if exactmatch == 4
