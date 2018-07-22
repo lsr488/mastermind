@@ -74,20 +74,6 @@ function genCode() {
 	});
 	// console.log("code :", code);
 
-	// display the code on the website
-	// codeDisplay.textContent = code.join(", ");
-
-	// TODO can these be more flexible?
-	firstCode.textContent = code[0];
-	secondCode.textContent = code[1];
-	thirdCode.textContent = code[2];
-	fourthCode.textContent = code[3];
-
-	assignBgColor(code, firstCode, 0);
-	assignBgColor(code, secondCode, 1);
-	assignBgColor(code, thirdCode, 2);
-	assignBgColor(code, fourthCode, 3);
-
 	return code;
 }
 
@@ -233,6 +219,7 @@ function assignBgColor(guesses, display, index) {
 function isWon(isExactMatch) {
 	// if exactmatch == 4
 	if(isExactMatch == 4) {
+		endOfGameDisplay();
 		disableInputs();
 		codeContainerDisplay.classList.toggle("active")
 		statusDisplay.classList.toggle("active")
@@ -242,6 +229,7 @@ function isWon(isExactMatch) {
 
 function isOutOfTurns() {
 	if(turnNumber == 0) {
+		endOfGameDisplay();
 		disableInputs();
 		codeContainerDisplay.classList.toggle("active")
 		statusDisplay.classList.toggle("active")
@@ -255,6 +243,19 @@ function disableInputs() {
 	guessInput3.setAttribute("disabled", "disabled");
 	guessInput4.setAttribute("disabled", "disabled");
 	submitButton.setAttribute("disabled", "disabled");
+}
+
+function endOfGameDisplay() {
+	// can this be made more flexible?
+	firstCode.textContent = code[0];
+	secondCode.textContent = code[1];
+	thirdCode.textContent = code[2];
+	fourthCode.textContent = code[3];
+
+	assignBgColor(code, firstCode, 0);
+	assignBgColor(code, secondCode, 1);
+	assignBgColor(code, thirdCode, 2);
+	assignBgColor(code, fourthCode, 3);
 }
 
 function displayTurns() {
