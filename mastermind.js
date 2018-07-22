@@ -144,7 +144,7 @@ function getGuess() {
 	// console.log(hints);
 
 	// for guess archive display
-	console.log("guesses archive:", guessesArchive);
+	// console.log("guesses archive:", guessesArchive);
 	guessesArchive.forEach(function(element) {
 		// console.log("guesses archive element:", element);
 

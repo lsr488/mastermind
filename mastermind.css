@@ -88,6 +88,10 @@ body {
 .game-area {
 }
 
+.status {
+	font-weight: bold;
+}
+
 .boxes {
 	display: inline-block;
 	height: 30px;
