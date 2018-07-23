@@ -43,6 +43,13 @@ var turnsLeftDisplay = document.querySelector("#turns-left");
 var statusDisplay = document.querySelector("#status-display");
 
 var colors = ["R", "O", "Y", "G", "B", "P"];
+
+var colorsMulti = {
+	easy: ["R", "O", "Y", "G", "B", "P"],
+	normal: ["M", "R", "O", "Y", "G", "B", "I", "P"],
+	hard: ["M", "R", "O", "Y", "G", "B", "T", "I", "P"]
+}
+
 var code = [];
 var guesses = "";
 var guessesArchive = [];
@@ -190,8 +197,6 @@ function getGuess() {
 	turnNumber--;
 	displayTurns();
 	isGameOver(isExactMatch);
-	// isWon(isExactMatch);
-	// isOutOfTurns();
 }
 
 // add color-bg class based on guesses[i] content
@@ -221,23 +226,6 @@ function displayTurns() {
 	turnsLeftDisplay.textContent = turnNumber;
 }
 
-// function isWon(isExactMatch) {
-// 	if(isExactMatch == 4) {
-// 		endOfGameDisplay();
-// 		disableInputs();
-// 		statusDisplay();
-// 		statusDisplay.textContent = "You won!";
-// 	}
-// }
-
-// function isOutOfTurns() {
-// 	if(turnNumber == 0) {
-// 		endOfGameDisplay();
-// 		disableInputs();
-// 		statusDisplay();
-// 		statusDisplay.textContent = "You're out of turns.";
-// 	}
-// }
 
 function isGameOver(isExactMatch) {
 	if(isExactMatch == 4) {
