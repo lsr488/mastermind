@@ -81,7 +81,6 @@ body {
 	width: 30px;
 	/*border: 1px solid black;*/
 	/*background-color: blue;*/
-	/*color: white;*/
 	text-align: center;
 	vertical-align: middle;
 	line-height: 30px;
@@ -95,8 +94,7 @@ body {
 }
 
 .archive {
-	/*display: flex;*/
-	display: grid;
+	display: flex;
 	flex-direction: row;
 	grid-template-columns: 1fr 1fr;
 	grid-column-gap: 10px;
