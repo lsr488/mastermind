@@ -69,11 +69,21 @@ var statusDisplay = document.querySelector("#status-display");
 // var colors = ["R", "O", "Y", "G", "B", "P"];
 // var codeNumber = 4;
 // var turnNumber = 10;
-var code = [];
-var guesses = "";
-var guessesArchive = [];
-var hintsArchive = [];
+// var code = [];
+// var guesses = "";
+// var guessesArchive = [];
+// var hintsArchive = [];
+var gameMode = "easy";
 var gameStats = {
+	shared: {
+		code: [],
+		guesses: "",
+		guessesArchive: [],
+		hintsArchive: [],
+		// guessesArchiveString: "",
+		// hintsArchiveString: ""
+		// // gameMode: "easy"
+	},
 	easy: {
 		colors: ["R", "O", "Y", "G", "B", "P"],
 		codeNumber: 4,
@@ -90,7 +100,6 @@ var gameStats = {
 		turnNumber: 6
 	}
 }
-var gameMode = "easy";
 
 // beware of codeNumber > colors.length
 // because we're using colors.length as a 
@@ -147,8 +156,9 @@ gameModeHard.addEventListener("click", function() {
 
 // TODO make this more flexible for more input options
 submitButton.addEventListener("click", function(event) {
+	// guesses gets reset to an empty string so the previous guesses aren't concatenated.
 	guesses = "";
-	guesses = guesses + guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value;
+	guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value;
 		getGuess();
 	// console.log(guesses);
 });
@@ -157,8 +167,14 @@ submitButton.addEventListener("click", function(event) {
 
 function gameSetUp() {
 	var codeNumber = "";
-// TODO reset all displays and underlying vars on-click of game modes
 
+	// gameMode = gameStats.shared.gameMode;
+	code = gameStats.shared.code;
+	guesses = gameStats.shared.guesses;
+	guessesArchive = gameStats.shared.guessesArchive;
+	// guessesArchiveString = gameStats.shared.guessesArchiveString;
+	hintsArchive = gameStats.shared.hintsArchive;
+	// hintsArchiveString = gameStats.shared.hintsArchiveString;
 
 	if(gameMode == "easy") {
 		codeNumber = gameStats.easy.codeNumber;
@@ -177,6 +193,9 @@ function gameSetUp() {
 	genCode(codeNumber);
 }
 
+// TODO reset all displays and underlying vars on-click of game modes
+	// resetGame();
+
 function genCode(codeNumber) {
 	code = [];
 	var tempCode = [];
@@ -191,22 +210,14 @@ function genCode(codeNumber) {
 		code.push(colors[el]);
 	});		
 
-	// while(tempCode.length < codeNumber) {
-	// 	var colorSelector = genNum();
-	// 	if(!tempCode.includes(colorSelector)) {
-	// 		tempCode.push(colorSelector);		
-	// 	}
-	// }
-	// tempCode.forEach(function(el) {
-	// 	code.push(colors[el]);
-	// });
 	displayTurns();
-	console.log("code :", code);
+	// console.log("code :", code);
 }
 
 // this potentially isn't very flexible if we want a bigger code
 // because it's dependent on the length colors array
 	// apparently setting colors in genCode(); via an if statement worked??
+	// yay OOP??
 function genNum() {
 	var x = (Math.floor(Math.random()*colors.length));
 	return x;
@@ -269,10 +280,22 @@ function getGuess() {
 			}		
 			else if(element[i] == "B") {
 				archiveClass = "blue";
-			}		
+			}
 			else if(element[i] == "P") {
 				archiveClass = "purple";
 			}				
+			else if(element[i] == "M") {
+				archiveClass = "magenta";
+			}				
+			else if(element[i] == "L") {
+				archiveClass = "lime";
+			}				
+			else if(element[i] == "C") {
+				archiveClass = "cyan";
+			}				
+			else if(element[i] == "S") {
+				archiveClass = "sienna";
+			}
 			guessesArchiveString += `<div class="boxes ${archiveClass}">${element[i]}</div> `;
 		}
 		guessesArchiveString += `<br>`;
@@ -332,17 +355,19 @@ function assignBgColor(guesses, display, index) {
 	else if(guesses[index] == "P") {
 		display.classList.add("purple");
 	}
+	else if(guesses[index] == "M") {
+		display.classList.add("magenta");
+	}				
+	else if(guesses[index] == "L") {
+		display.classList.add("lime");
+	}				
+	else if(guesses[index] == "C") {
+		display.classList.add("cyan");
+	}				
+	else if(guesses[index] == "S") {
+		display.classList.add("sienna");
+	}
 }
-
-// function turnSetUp() {
-// 	if(gameMode == "easy") {
-// 		turnsLeftDisplay.textContent = gameStats.easy.turnNumber;
-// 	} else if(gameMode == "normal") {
-// 		turnsLeftDisplay.textContent = gameStats.normal.turnNumber;
-// 	} else if(gameMode == "hard") {
-// 		turnsLeftDisplay.textContent = gameStats.hard.turnNumber;
-// 	}
-// }
 
 function displayTurns() {
 	turnsLeftDisplay.textContent = turnNumber;
@@ -371,8 +396,8 @@ function disableInputs() {
 }
 
 function endofGameStatusDisplay() {
-	codeContainerDisplay.classList.toggle("active");
-	statusDisplay.classList.toggle("active");
+	codeContainerDisplay.classList.toggle("no-display");
+	statusDisplay.classList.toggle("no-display");
 }
 
 function endOfGameDisplay() {
@@ -386,6 +411,13 @@ function endOfGameDisplay() {
 	assignBgColor(code, secondCode, 1);
 	assignBgColor(code, thirdCode, 2);
 	assignBgColor(code, fourthCode, 3);
+}
+
+function resetGame() {
+	hintsDisplay.textContent = "";
+	hintsArchiveDisplay.textContent = "";
+	guessesDisplay.textContent = "";
+	guessesDisplayArchive.textContent = "";
 }
 
 gameSetUp();
