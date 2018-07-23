@@ -34,6 +34,11 @@ body {
 	text-decoration: underline;
 }
 
+.magenta {
+	background-color: magenta;
+	color: whitesmoke;
+}
+
 .red {
 	background-color: red;
 	color: whitesmoke;
@@ -49,13 +54,28 @@ body {
 	color: whitesmoke;
 }
 
+.lime {
+	background-color: lime;
+	color: whitesmoke;
+}
+
 .green {
 	background-color: green;
 	color: whitesmoke;
 }
 
+.cyan {
+	background-color: darkturquoise;
+	color: whitesmoke;
+}
+
 .blue {
 	background-color: blue;
+	color: whitesmoke;
+}
+
+.sienna {
+	background-color: sienna;
 	color: whitesmoke;
 }
 
@@ -119,6 +139,27 @@ body {
 	margin: 1em 0 1em 0;
 }
 
-.active {
+.no-display {
 	display: none;
+}
+
+.game-mode {
+	display: flex;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.game-mode-type {
+	height: 40px;
+	width: 115px;
+	line-height: 40px;
+	font-size: 1.15em;
+	text-align: center;
+	/*border: 1px solid black;*/
+}
+
+.engaged {
+	background-color: dimgray;
+	color: whitesmoke;
 }

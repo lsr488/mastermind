@@ -8,23 +8,50 @@
 
 <div class="container">
 	<h1>Mastermind Game</h1>
+	<ul class="game-mode">
+		<li class="game-mode-type engaged" id="easy">Easy</li>
+		<li class="game-mode-type" id="normal">Normal</li>
+		<li class="game-mode-type" id="hard">Hard</li>
+	</ul>
 
-	<h2 class="colors">
-		<span class="red"><span class="underline">R</span>ed.</span> 
-			<span class="orange"><span class="underline">O</span>range.</span> 
-			<span class="yellow"><span class="underline">Y</span>ellow.</span> 
-			<span class="green"><span class="underline">G</span>reen.</span> 
-			<span class="blue"><span class="underline">B</span>lue.</span> 
-			<span class="purple"><span class="underline">P</span>urple.</span>
+	<h2 id="easy-colors" class="colors">
+			<span id="red-banner" class="red"><span class="underline">R</span>ed.</span> 
+			<span id="orange-banner" class="orange"><span class="underline">O</span>range.</span> 
+			<span id="yellow-banner" class="yellow"><span class="underline">Y</span>ellow.</span> 
+			<span id="green-banner" class="green"><span class="underline">G</span>reen.</span> 
+			<span id="blue-banner" class="blue"><span class="underline">B</span>lue.</span> 
+			<span id="purple-banner" class="purple"><span class="underline">P</span>urple.</span>		
+	</h2>
+	<h2 id="normal-colors" class="colors no-display">
+			<span id="magenta-banner" class="magenta"><span class="underline">M</span>agenta.</span> 
+			<span id="red-banner" class="red"><span class="underline">R</span>ed.</span> 
+			<span id="orange-banner" class="orange"><span class="underline">O</span>range.</span> 
+			<span id="yellow-banner" class="yellow"><span class="underline">Y</span>ellow.</span> 
+			<span id="green-banner" class="green"><span class="underline">G</span>reen.</span> 
+			<span id="cyan-banner" class="cyan"><span class="underline">C</span>yan.</span> 
+			<span id="blue-banner" class="blue"><span class="underline">B</span>lue.</span> 
+			<span id="purple-banner" class="purple"><span class="underline">P</span>urple.</span>
+	</h2>
+	<h2 id="hard-colors" class="colors no-display">
+			<span id="magenta-banner" class="magenta"><span class="underline">M</span>agenta.</span> 
+			<span id="red-banner" class="red"><span class="underline">R</span>ed.</span> 
+			<span id="orange-banner" class="orange"><span class="underline">O</span>range.</span> 
+			<span id="yellow-banner" class="yellow"><span class="underline">Y</span>ellow.</span> 
+			<span id="lime-banner" class="lime"><span class="underline">L</span>ime.</span>
+			<span id="green-banner" class="green"><span class="underline">G</span>reen.</span> 
+			<span id="cyan-banner" class="cyan"><span class="underline">C</span>yan.</span> 
+			<span id="blue-banner" class="blue"><span class="underline">B</span>lue.</span> 
+			<span id="purple-banner" class="purple"><span class="underline">P</span>urple.</span>
+			<span id="sienna-banner" class="sienna"><span class="underline">S</span>ienna.</span> 
 	</h2>
 
-	<p>Guess four colors. There are no repeats.</p>
-	<p>A <strong>*</strong> means you have the correct color in the correct place. A <strong>o</strong> means you have the correct color but in the wrong place. The placement of the markers do <em>not</em> correspond with the colors' locations.</p>
+	<p class="color-instructions">Guess <strong><span id="easy-number">four</span><span id="normal-number" class="no-display">six</span><span id="hard-number" class="no-display">eight</span></strong> colors. There are no repeats.</p>
+	<p class="hint-instructions">A <strong>*</strong> means you have the correct color in the correct place. A <strong>o</strong> means you have the correct color but in the wrong place. The placement of the markers do <em>not</em> correspond with the colors' locations.</p>
 
 	<div class="game-area">
-		<h2 class="active status" id="status-display"></h2>
+		<h2 class="no-display status" id="status-display"></h2>
 
-		<div id="code-container"  class="active">Code : <span id="code"></span>
+		<div id="code-container"  class="no-display">Code : <span id="code"></span>
 				<div id="first-code" class="boxes"></div>
 				<div id="second-code" class="boxes"></div>
 				<div id="third-code" class="boxes"></div>
