@@ -3,7 +3,12 @@
 <head>
 	<title>Mastermind</title>
 	<link rel="stylesheet" type="text/css" href="mastermind.css">
-</head>
+<!-- 	<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    console.log("DOM fully loaded and parsed");
+  });
+</script>
+ --></head>
 <body>
 
 <div class="container">
@@ -56,7 +61,7 @@
 				<div id="second-code" class="boxes"></div>
 				<div id="third-code" class="boxes"></div>
 				<div id="fourth-code" class="boxes"></div>
-				<div id="fifth-code" class="boxes no-display"></div>
+				<div id="fifth-code" class="boxes"></div>
 				<div id="sixth-code" class="boxes"></div>
 				<div id="seventh-code" class="boxes"></div>
 				<div id="eight-code" class="boxes"></div>
@@ -91,6 +96,23 @@
 				<button id="submit" name="submit" type="submit" value="submit-true">Submit</button>
 			</div>
 		</fieldset>
+
+		<fieldset class="color-bank">
+			<legend>Color Bank:</legend>
+			<div id="color-guess-bank">
+				<div id="bank-magenta" class="boxes magenta no-display">M</div>
+				<div id="bank-red" class="boxes red">R</div>
+				<div id="bank-orange" class="boxes orange">O</div>
+				<div id="bank-yellow" class="boxes yellow">Y</div>
+				<div id="bank-lime" class="boxes lime no-display">L</div>
+				<div id="bank-green" class="boxes green">G</div>
+				<div id="bank-cyan" class="boxes cyan no-display">C</div>
+				<div id="bank-blue" class="boxes blue">B</div>
+				<div id="bank-purple" class="boxes purple">P</div>
+				<div id="bank-sienna" class="boxes sienna no-display">S</div>
+			</div>	
+		</fieldset>
+
 	</div>
 
 	<p>Turns Left: <span id="turns-left"></span></p>
@@ -107,6 +129,7 @@
 	</div>
 
 </div>
+
 
 <script type="text/javascript" src="mastermind.js"></script>
 </body>

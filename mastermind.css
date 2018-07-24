@@ -135,7 +135,7 @@ body {
 }
 
 .guess-input {
-	width: 50%;
+	width: 385px;
 	margin: 1em 0 1em 0;
 }
 
@@ -162,4 +162,8 @@ body {
 .engaged {
 	background-color: dimgray;
 	color: whitesmoke;
+}
+
+.color-bank {
+	width: 385px;
 }

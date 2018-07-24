@@ -13,12 +13,6 @@
 	// for every correct color and incorrect location, use a white peg 
 // game ends when the code is guessed or number of turns maxed out
 
-// 0 red
-// 1 orange
-// 2 yellow
-// 3 green
-// 4 blue
-// 5 purple
 
 //game mode buttons
 var gameModeEasy = document.querySelector("#easy");
@@ -74,17 +68,23 @@ var guessInput7 = document.querySelector("#seventh-guess");
 var guessInput8 = document.querySelector("#eighth-guess");
 var submitButton = document.querySelector("#submit");
 
+// color bank
+var guessBank = document.querySelector("#color-guess-bank");
+var bankRed = document.querySelector("#bank-red");
+var bankOrange = document.querySelector("#bank-orange");
+var bankYellow = document.querySelector("#bank-yellow");
+var bankGreen = document.querySelector("#bank-green");
+var bankBlue = document.querySelector("#bank-blue");
+var bankPurple = document.querySelector("#bank-purple");
+var bankMagenta = document.querySelector("#bank-magenta");
+var bankLime = document.querySelector("#bank-lime");
+var bankCyan = document.querySelector("#bank-cyan");
+var bankSienna = document.querySelector("#bank-sienna");
+
 // misc displays
 var turnsLeftDisplay = document.querySelector("#turns-left");
 var statusDisplay = document.querySelector("#status-display");
 
-// var colors = ["R", "O", "Y", "G", "B", "P"];
-// var codeNumber = 4;
-// var turnNumber = 10;
-// var code = [];
-// var guesses = "";
-// var guessesArchive = [];
-// var hintsArchive = [];
 var gameMode = "easy";
 var gameStats = {
 	shared: {
@@ -92,6 +92,7 @@ var gameStats = {
 		guesses: "",
 		guessesArchive: [],
 		hintsArchive: [],
+		guessBankDisplay: "",
 		// guessesArchiveString: "",
 		// hintsArchiveString: ""
 		// // gameMode: "easy"
@@ -113,16 +114,7 @@ var gameStats = {
 	}
 }
 
-// beware of codeNumber > colors.length
-// because we're using colors.length as a 
-// a limiter on the random number generator
-// and also requiring unique numbers, so it literally
-// has spaces that can't be filled
-
-// TODO: create an option for more colors and a longer code to break
-
 gameModeEasy.addEventListener("click", function() {
-	console.log("easy btn clicked");
 	// gameMode
 	gameModeEasy.classList.add("engaged");
 	gameModeNormal.classList.remove("engaged");
@@ -150,6 +142,12 @@ gameModeEasy.addEventListener("click", function() {
 	guessInput7.classList.add("no-display");
 	guessInput8.classList.add("no-display");
 
+	// color bank
+	bankMagenta.classList.add("no-display");
+	bankLime.classList.add("no-display");
+	bankCyan.classList.add("no-display");
+	bankSienna.classList.add("no-display");
+
 	gameMode = "easy";
 	displayTurns();
 	gameSetUp();
@@ -171,7 +169,7 @@ gameModeNormal.addEventListener("click", function() {
 	normalNumber.classList.remove("no-display");
 	hardNumber.classList.add("no-display");
 
-	// guess boxes -- do these need to be removed/added?
+	// guess boxes
 	fifthColor.classList.remove("no-display");
 	sixthColor.classList.remove("no-display");
 	seventhColor.classList.add("no-display");
@@ -182,6 +180,12 @@ gameModeNormal.addEventListener("click", function() {
 	guessInput6.classList.remove("no-display");
 	guessInput7.classList.add("no-display");
 	guessInput8.classList.add("no-display");
+
+	// color bank
+	bankMagenta.classList.remove("no-display");
+	bankLime.classList.remove("no-display");
+	bankCyan.classList.add("no-display");
+	bankSienna.classList.add("no-display");
 
 	gameMode = "normal";
 	displayTurns();
@@ -216,6 +220,11 @@ gameModeHard.addEventListener("click", function() {
 	guessInput7.classList.remove("no-display");
 	guessInput8.classList.remove("no-display");
 
+	// color bank
+	bankMagenta.classList.remove("no-display");
+	bankLime.classList.remove("no-display");
+	bankCyan.classList.remove("no-display");
+	bankSienna.classList.remove("no-display");
 
 	gameMode = "hard";
 	displayTurns();
@@ -239,7 +248,36 @@ submitButton.addEventListener("click", function(event) {
 	// console.log(guesses);
 });
 
-// TODO is turnSetUp() needed?
+bankRed.addEventListener("click", function(event) {
+		console.log("bankRed clicked");
+});
+bankOrange.addEventListener("click", function(event) {
+		console.log("bankOrange clicked");
+});
+bankYellow.addEventListener("click", function(event) {
+		console.log("bankYellow clicked");
+});
+bankGreen.addEventListener("click", function(event) {
+		console.log("bankGreen clicked");
+});
+bankBlue.addEventListener("click", function(event) {
+		console.log("bankBlue clicked");
+});
+bankPurple.addEventListener("click", function(event) {
+		console.log("bankPurple clicked");
+});
+bankMagenta.addEventListener("click", function(event) {
+		console.log("bankMagenta clicked");
+});
+bankLime.addEventListener("click", function(event) {
+		console.log("bankLime clicked");
+});
+bankCyan.addEventListener("click", function(event) {
+		console.log("bankCyan clicked");
+});
+bankSienna.addEventListener("click", function(event) {
+		console.log("bankSienna clicked");
+});
 
 function gameSetUp() {
 	// var codeNumber = "";
@@ -251,6 +289,7 @@ function gameSetUp() {
 	// guessesArchiveString = gameStats.shared.guessesArchiveString;
 	hintsArchive = gameStats.shared.hintsArchive;
 	// hintsArchiveString = gameStats.shared.hintsArchiveString;
+	guessBankDisplay = gameStats.shared.guessBankDisplay;
 
 	if(gameMode == "easy") {
 		codeNumber = gameStats.easy.codeNumber;
@@ -265,7 +304,6 @@ function gameSetUp() {
 		colors = gameStats.hard.colors;
 		turnNumber = gameStats.hard.turnNumber;
 	}
-
 	genCode(codeNumber);
 }
 
@@ -379,6 +417,9 @@ function getGuess() {
 		guessesArchiveString += `<br>`;
 	});
 
+	// TODO make displayColorBoxes() work here
+	// displayColorBoxes(guessesArchive, guessesArchiveDisplay, guessesArchiveString)
+
 	// console.log("guess archive string:", guessesArchiveString);
 
 	// for hints archive display
@@ -408,7 +449,7 @@ function getGuess() {
 
 	guessesArchiveDisplay.innerHTML = guessesArchiveString;
 	var hintsLength = hints.length;
-	hintsDisplay.textContent = hints.sort().join(" ") + ` (${hintsLength})`;
+	hintsDisplay.textContent = `(${hintsLength}) ` + hints.sort().join(" ");
 	hintsArchiveDisplay.innerHTML = hintsArchiveString;
 
 	// TODO: figure out how to make it more flexible
@@ -434,6 +475,44 @@ function getGuess() {
 
 function displayTurns() {
 	turnsLeftDisplay.textContent = turnNumber;
+}
+
+function displayColorBoxes(array, displayName, displayHolder) {
+for(var i = 0; i < array.length; i++) {
+			var archiveClass = "";
+			if(array[i] == "R") {
+				archiveClass = "red";
+			}		
+			else if(array[i] == "O") {
+				archiveClass = "orange";
+			}		
+			else if(array[i] == "Y") {
+				archiveClass = "yellow";
+			}		
+			else if(array[i] == "G") {
+				archiveClass = "green";
+			}		
+			else if(array[i] == "B") {
+				archiveClass = "blue";
+			}
+			else if(array[i] == "P") {
+				archiveClass = "purple";
+			}				
+			else if(array[i] == "M") {
+				archiveClass = "magenta";
+			}				
+			else if(array[i] == "L") {
+				archiveClass = "lime";
+			}				
+			else if(array[i] == "C") {
+				archiveClass = "cyan";
+			}				
+			else if(array[i] == "S") {
+				archiveClass = "sienna";
+			}
+			displayName += `<div class="boxes ${archiveClass}" id="bank-${archiveClass}">${array[i]}</div> `;
+		}
+	displayHolder.innerHTML = displayName;	
 }
 
 function addColorLetterToBoxDisplay(boxNum, guessInput) {
