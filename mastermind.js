@@ -42,6 +42,10 @@ var firstCode = document.querySelector("#first-code");
 var secondCode = document.querySelector("#second-code");
 var thirdCode = document.querySelector("#third-code");
 var fourthCode = document.querySelector("#fourth-code");
+var fifthCode = document.querySelector("#fifth-code");
+var sixthCode = document.querySelector("#sixth-code");
+var seventhCode = document.querySelector("#seventh-code");
+var eighthCode = document.querySelector("#eight-code");
 
 // display color guesses
 var guessesDisplay = document.querySelector("#guesses");
@@ -50,6 +54,10 @@ var firstColor = document.querySelector("#first-color");
 var secondColor = document.querySelector("#second-color");
 var thirdColor = document.querySelector("#third-color");
 var fourthColor = document.querySelector("#fourth-color");
+var fifthColor = document.querySelector("#fifth-color");
+var sixthColor = document.querySelector("#sixth-color");
+var seventhColor = document.querySelector("#seventh-color");
+var eighthColor = document.querySelector("#eighth-color");
 
 // archive displays
 var guessesArchiveDisplay = document.querySelector("#guessesArchive");
@@ -60,6 +68,10 @@ var guessInput1 = document.querySelector("#first-guess");
 var guessInput2 = document.querySelector("#second-guess");
 var guessInput3 = document.querySelector("#third-guess");
 var guessInput4 = document.querySelector("#fourth-guess");
+var guessInput5 = document.querySelector("#fifth-guess");
+var guessInput6 = document.querySelector("#sixth-guess");
+var guessInput7 = document.querySelector("#seventh-guess");
+var guessInput8 = document.querySelector("#eighth-guess");
 var submitButton = document.querySelector("#submit");
 
 // misc displays
@@ -110,45 +122,101 @@ var gameStats = {
 // TODO: create an option for more colors and a longer code to break
 
 gameModeEasy.addEventListener("click", function() {
+	console.log("easy btn clicked");
+	// gameMode
 	gameModeEasy.classList.add("engaged");
 	gameModeNormal.classList.remove("engaged");
 	gameModeHard.classList.remove("engaged");
+	
+	// color banners
 	easyColors.classList.remove("no-display");
 	normalColors.classList.add("no-display");
 	hardColors.classList.add("no-display");
+	
+	// instructions
 	easyNumber.classList.remove("no-display");
 	normalNumber.classList.add("no-display");
 	hardNumber.classList.add("no-display");
+	
+	// guess boxes
+	fifthCode.classList.add("no-display");
+	sixthCode.classList.add("no-display");
+	seventhCode.classList.add("no-display");
+	eighthCode.classList.add("no-display");
+
+	// guess inputs
+	guessInput5.classList.add("no-display");
+	guessInput6.classList.add("no-display");
+	guessInput7.classList.add("no-display");
+	guessInput8.classList.add("no-display");
+
 	gameMode = "easy";
 	displayTurns();
 	gameSetUp();
 });
 
 gameModeNormal.addEventListener("click", function() {
+	// gameMode
 	gameModeNormal.classList.add("engaged");
 	gameModeEasy.classList.remove("engaged");
 	gameModeHard.classList.remove("engaged");
+
+	// color banners
 	easyColors.classList.add("no-display");
 	normalColors.classList.remove("no-display");
 	hardColors.classList.add("no-display");
+
+	// instructions
 	easyNumber.classList.add("no-display");
 	normalNumber.classList.remove("no-display");
 	hardNumber.classList.add("no-display");
+
+	// guess boxes -- do these need to be removed/added?
+	fifthColor.classList.remove("no-display");
+	sixthColor.classList.remove("no-display");
+	seventhColor.classList.add("no-display");
+	eighthColor.classList.add("no-display");
+
+	// guess inputs
+	guessInput5.classList.remove("no-display");
+	guessInput6.classList.remove("no-display");
+	guessInput7.classList.add("no-display");
+	guessInput8.classList.add("no-display");
+
 	gameMode = "normal";
 	displayTurns();
 	gameSetUp();
 });
 
 gameModeHard.addEventListener("click", function() {
+	// gameMode
 	gameModeHard.classList.add("engaged");
 	gameModeNormal.classList.remove("engaged");
 	gameModeEasy.classList.remove("engaged");
+
+	// color banners
 	easyColors.classList.add("no-display");
 	normalColors.classList.add("no-display");
 	hardColors.classList.remove("no-display");
+
+	// instructions
 	easyNumber.classList.add("no-display");
 	normalNumber.classList.add("no-display");
 	hardNumber.classList.remove("no-display");
+
+	// guess boxes
+	fifthColor.classList.remove("no-display");
+	sixthColor.classList.remove("no-display");
+	seventhColor.classList.remove("no-display");
+	eighthColor.classList.remove("no-display");
+
+	// guess inputs
+	guessInput5.classList.remove("no-display");
+	guessInput6.classList.remove("no-display");
+	guessInput7.classList.remove("no-display");
+	guessInput8.classList.remove("no-display");
+
+
 	gameMode = "hard";
 	displayTurns();
 	gameSetUp();
@@ -158,7 +226,15 @@ gameModeHard.addEventListener("click", function() {
 submitButton.addEventListener("click", function(event) {
 	// guesses gets reset to an empty string so the previous guesses aren't concatenated.
 	guesses = "";
-	guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value;
+	if(gameMode == "easy") {
+		guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value;
+	} 
+	else if(gameMode == "normal") {
+		guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value + " " + guessInput5.value + " " + guessInput6.value;
+	}
+	else if(gameMode == "hard") {
+		guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value + " " + guessInput5.value + " " + guessInput6.value + " " + guessInput7.value + " " + guessInput8.value;
+	}
 		getGuess();
 	// console.log(guesses);
 });
@@ -166,7 +242,7 @@ submitButton.addEventListener("click", function(event) {
 // TODO is turnSetUp() needed?
 
 function gameSetUp() {
-	var codeNumber = "";
+	// var codeNumber = "";
 
 	// gameMode = gameStats.shared.gameMode;
 	code = gameStats.shared.code;
@@ -230,6 +306,7 @@ function getGuess() {
 	// var isNotInCode = 0;
 	var isExactMatch = 0;
 	// var isNotExactMatch = 0; 
+	
 	var hints = [];
 	var guessesArchiveString = "";
 	var hintsArchiveString = "";
@@ -238,7 +315,7 @@ function getGuess() {
 
 	// var guesses = "r,o,y,g";	
 	guesses = guesses.toUpperCase().split(" ");
-	// console.log("guess:", guesses);
+	console.log("guess:", guesses);
 
 // check if exact match between code[i] and guesses[i]
 	for(var i = 0; i < guesses.length; i++) {
@@ -263,7 +340,6 @@ function getGuess() {
 	// console.log("guesses archive:", guessesArchive);
 	guessesArchive.forEach(function(element) {
 		// console.log("guesses archive element:", element);
-
 		for(var i = 0; i < element.length; i++) {
 			var archiveClass = "";
 			if(element[i] == "R") {
@@ -296,7 +372,9 @@ function getGuess() {
 			else if(element[i] == "S") {
 				archiveClass = "sienna";
 			}
+			// console.log(element[i]);
 			guessesArchiveString += `<div class="boxes ${archiveClass}">${element[i]}</div> `;
+			// console.log(guessesArchiveString);
 		}
 		guessesArchiveString += `<br>`;
 	});
@@ -308,19 +386,29 @@ function getGuess() {
 		hintsArchiveString += '<div class="hint">' + hintsArchive[j].sort().join(" ") + "</div>";
 	}
 
-	// console.log(guessesArchiveString + hintsArchiveString)
-
+	// console.log(guessesArchiveString + hintsArchiveString);
 	// console.log(guessesArchiveString);
 	// console.log(hintsArchiveString);
 
 	// display guesses on webpage
-	firstColor.textContent = guessInput1.value.toUpperCase();
-	secondColor.textContent = guessInput2.value.toUpperCase();
-	thirdColor.textContent = guessInput3.value.toUpperCase();
-	fourthColor.textContent = guessInput4.value.toUpperCase();
-	// guessesDisplay.textContent = guesses.join(", ");
-	hintsDisplay.textContent = hints.sort().join(" ");
+	addColorLetterToBoxDisplay(firstColor, guessInput1);
+	addColorLetterToBoxDisplay(secondColor, guessInput2);
+	addColorLetterToBoxDisplay(thirdColor, guessInput3);
+	addColorLetterToBoxDisplay(fourthColor, guessInput4);
+	if(gameMode == "normal") {
+		addColorLetterToBoxDisplay(fifthColor, guessInput5);
+		addColorLetterToBoxDisplay(sixthColor, guessInput6);
+	}
+	if(gameMode == "hard") {
+		addColorLetterToBoxDisplay(fifthColor, guessInput5);
+		addColorLetterToBoxDisplay(sixthColor, guessInput6);
+		addColorLetterToBoxDisplay(seventhColor, guessInput7);
+		addColorLetterToBoxDisplay(eighthColor, guessInput8);
+	}
+
 	guessesArchiveDisplay.innerHTML = guessesArchiveString;
+	var hintsLength = hints.length;
+	hintsDisplay.textContent = hints.sort().join(" ") + ` (${hintsLength})`;
 	hintsArchiveDisplay.innerHTML = hintsArchiveString;
 
 	// TODO: figure out how to make it more flexible
@@ -328,10 +416,28 @@ function getGuess() {
 	assignBgColor(guesses, secondColor, 1);
 	assignBgColor(guesses, thirdColor, 2);
 	assignBgColor(guesses, fourthColor, 3);
+	if(gameMode == "normal") {
+		assignBgColor(guesses, fifthColor, 4);
+		assignBgColor(guesses, sixthColor, 5);
+	}
+	if(gameMode == "hard") {
+		assignBgColor(guesses, fifthColor, 4);
+		assignBgColor(guesses, sixthColor, 5);
+		assignBgColor(guesses, seventhColor, 6);
+		assignBgColor(guesses, eighthColor, 7);
+	}
 
 	turnNumber--;
 	displayTurns();
 	isGameOver(isExactMatch);
+}
+
+function displayTurns() {
+	turnsLeftDisplay.textContent = turnNumber;
+}
+
+function addColorLetterToBoxDisplay(boxNum, guessInput) {
+	boxNum.textContent = guessInput.value.toUpperCase();
 }
 
 // add color-bg class based on guesses[i] content
@@ -369,10 +475,6 @@ function assignBgColor(guesses, display, index) {
 	}
 }
 
-function displayTurns() {
-	turnsLeftDisplay.textContent = turnNumber;
-}
-
 function isGameOver(isExactMatch) {
 	if(isExactMatch == 4) {
 		endOfGameDisplay();
@@ -392,6 +494,10 @@ function disableInputs() {
 	guessInput2.setAttribute("disabled", "disabled");
 	guessInput3.setAttribute("disabled", "disabled");
 	guessInput4.setAttribute("disabled", "disabled");
+	guessInput5.setAttribute("disabled", "disabled");
+	guessInput6.setAttribute("disabled", "disabled");
+	guessInput7.setAttribute("disabled", "disabled");
+	guessInput8.setAttribute("disabled", "disabled");
 	submitButton.setAttribute("disabled", "disabled");
 }
 
@@ -406,11 +512,20 @@ function endOfGameDisplay() {
 	secondCode.textContent = code[1];
 	thirdCode.textContent = code[2];
 	fourthCode.textContent = code[3];
+	fifthCode.textContent = code[4];
+	sixthCode.textContent = code[5];
+	seventhCode.textContent = code[6];
+	eighthCode.textContent = code[7];
+
 
 	assignBgColor(code, firstCode, 0);
 	assignBgColor(code, secondCode, 1);
 	assignBgColor(code, thirdCode, 2);
 	assignBgColor(code, fourthCode, 3);
+	assignBgColor(code, fifthCode, 4);
+	assignBgColor(code, sixthCode, 5);
+	assignBgColor(code, seventhCode, 6);
+	assignBgColor(code, eighthCode, 7);
 }
 
 function resetGame() {
