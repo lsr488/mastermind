@@ -93,6 +93,8 @@ var gameStats = {
 		guessesArchive: [],
 		hintsArchive: [],
 		guessBankDisplay: "",
+		currentGuess: "",
+		colorBankGuesses: [],
 		// guessesArchiveString: "",
 		// hintsArchiveString: ""
 		// // gameMode: "easy"
@@ -250,46 +252,78 @@ submitButton.addEventListener("click", function(event) {
 
 bankRed.addEventListener("click", function(event) {
 		console.log("bankRed clicked");
+		currentGuess = "R";
+		console.log("current guess:", currentGuess);
+		getGuessColorBank();
 });
 bankOrange.addEventListener("click", function(event) {
 		console.log("bankOrange clicked");
+		currentGuess = "O";
+		console.log("current guess:", currentGuess);
+		getGuessColorBank();
 });
 bankYellow.addEventListener("click", function(event) {
 		console.log("bankYellow clicked");
+		currentGuess = "Y";
+		console.log("current guess:", currentGuess);
+		getGuessColorBank();
 });
 bankGreen.addEventListener("click", function(event) {
 		console.log("bankGreen clicked");
+		currentGuess = "G";
+		console.log("current guess:", currentGuess);
+		getGuessColorBank();
 });
 bankBlue.addEventListener("click", function(event) {
 		console.log("bankBlue clicked");
+		currentGuess = "B";
+		console.log("current guess:", currentGuess);
+		getGuessColorBank();
 });
 bankPurple.addEventListener("click", function(event) {
 		console.log("bankPurple clicked");
+		currentGuess = "P";
+		console.log("current guess:", currentGuess);
+		getGuessColorBank();
 });
 bankMagenta.addEventListener("click", function(event) {
 		console.log("bankMagenta clicked");
+		currentGuess = "M";
+		console.log("current guess:", currentGuess);
+		getGuessColorBank();
 });
 bankLime.addEventListener("click", function(event) {
 		console.log("bankLime clicked");
+		currentGuess = "L";
+		console.log("current guess:", currentGuess);
+		getGuessColorBank();
 });
 bankCyan.addEventListener("click", function(event) {
 		console.log("bankCyan clicked");
+		currentGuess = "C";
+		console.log("current guess:", currentGuess);
+		getGuessColorBank();
 });
 bankSienna.addEventListener("click", function(event) {
 		console.log("bankSienna clicked");
+		currentGuess = "S";
+		console.log("current guess:", currentGuess);
+		getGuessColorBank();
 });
 
 function gameSetUp() {
 	// var codeNumber = "";
 
 	// gameMode = gameStats.shared.gameMode;
+	// guessesArchiveString = gameStats.shared.guessesArchiveString;
+	// hintsArchiveString = gameStats.shared.hintsArchiveString;
 	code = gameStats.shared.code;
 	guesses = gameStats.shared.guesses;
 	guessesArchive = gameStats.shared.guessesArchive;
-	// guessesArchiveString = gameStats.shared.guessesArchiveString;
 	hintsArchive = gameStats.shared.hintsArchive;
-	// hintsArchiveString = gameStats.shared.hintsArchiveString;
 	guessBankDisplay = gameStats.shared.guessBankDisplay;
+	currentGuess = gameStats.shared.currentGuess;
+	colorBankGuesses = gameStats.shared.colorBankGuesses;
 
 	if(gameMode == "easy") {
 		codeNumber = gameStats.easy.codeNumber;
@@ -335,6 +369,19 @@ function genCode(codeNumber) {
 function genNum() {
 	var x = (Math.floor(Math.random()*colors.length));
 	return x;
+}
+
+// once getGuessColorBank() works, remove getGuess and re-use that name
+// also TODO: refactor into 2 functions, getGuess and checkGuess
+function getGuessColorBank() {
+	var isInCode;
+	var isExactMatch = 0;
+	var hints = [];
+	var guessesArchiveString = "";
+	var hintsArchiveString = "";
+
+	colorBankGuesses.push(currentGuess);
+	console.log("color bank guesses:", colorBankGuesses);
 }
 
 // get user guess and compare guess against code
