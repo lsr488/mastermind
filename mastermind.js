@@ -13,6 +13,9 @@
 	// for every correct color and incorrect location, use a white peg 
 // game ends when the code is guessed or number of turns maxed out
 
+// TODO display hints with color bank inputs
+// TODO move current guesses and hints to their archives
+// TODO reset the colorbank and current guess/hints for next guess
 
 //game mode buttons
 var gameModeEasy = document.querySelector("#easy");
@@ -66,7 +69,7 @@ var guessInput5 = document.querySelector("#fifth-guess");
 var guessInput6 = document.querySelector("#sixth-guess");
 var guessInput7 = document.querySelector("#seventh-guess");
 var guessInput8 = document.querySelector("#eighth-guess");
-var submitButton = document.querySelector("#submit");
+// var submitButton = document.querySelector("#submit");
 
 // color bank
 var guessBank = document.querySelector("#color-guess-bank");
@@ -80,6 +83,7 @@ var bankMagenta = document.querySelector("#bank-magenta");
 var bankLime = document.querySelector("#bank-lime");
 var bankCyan = document.querySelector("#bank-cyan");
 var bankSienna = document.querySelector("#bank-sienna");
+var checkGuessButton = document.getElementsByName("check-guess")[0];
 
 // misc displays
 var turnsLeftDisplay = document.querySelector("#turns-left");
@@ -95,7 +99,11 @@ var gameStats = {
 		guessBankDisplay: "",
 		currentGuess: "",
 		colorBankGuesses: [],
-		// guessesArchiveString: "",
+		hints: [],
+		isInCode: "",
+		isExactMatch: "",
+		guessesArchiveString: "",
+		codeGuessNumber: 0,
 		// hintsArchiveString: ""
 		// // gameMode: "easy"
 	},
@@ -172,16 +180,16 @@ gameModeNormal.addEventListener("click", function() {
 	hardNumber.classList.add("no-display");
 
 	// guess boxes
-	fifthColor.classList.remove("no-display");
-	sixthColor.classList.remove("no-display");
-	seventhColor.classList.add("no-display");
-	eighthColor.classList.add("no-display");
+	// fifthColor.classList.remove("no-display");
+	// sixthColor.classList.remove("no-display");
+	// seventhColor.classList.add("no-display");
+	// eighthColor.classList.add("no-display");
 
 	// guess inputs
-	guessInput5.classList.remove("no-display");
-	guessInput6.classList.remove("no-display");
-	guessInput7.classList.add("no-display");
-	guessInput8.classList.add("no-display");
+	// guessInput5.classList.remove("no-display");
+	// guessInput6.classList.remove("no-display");
+	// guessInput7.classList.add("no-display");
+	// guessInput8.classList.add("no-display");
 
 	// color bank
 	bankMagenta.classList.remove("no-display");
@@ -211,16 +219,16 @@ gameModeHard.addEventListener("click", function() {
 	hardNumber.classList.remove("no-display");
 
 	// guess boxes
-	fifthColor.classList.remove("no-display");
-	sixthColor.classList.remove("no-display");
-	seventhColor.classList.remove("no-display");
-	eighthColor.classList.remove("no-display");
+	// fifthColor.classList.remove("no-display");
+	// sixthColor.classList.remove("no-display");
+	// seventhColor.classList.remove("no-display");
+	// eighthColor.classList.remove("no-display");
 
 	// guess inputs
-	guessInput5.classList.remove("no-display");
-	guessInput6.classList.remove("no-display");
-	guessInput7.classList.remove("no-display");
-	guessInput8.classList.remove("no-display");
+	// guessInput5.classList.remove("no-display");
+	// guessInput6.classList.remove("no-display");
+	// guessInput7.classList.remove("no-display");
+	// guessInput8.classList.remove("no-display");
 
 	// color bank
 	bankMagenta.classList.remove("no-display");
@@ -234,81 +242,136 @@ gameModeHard.addEventListener("click", function() {
 });
 
 // TODO make this more flexible for more input options
-submitButton.addEventListener("click", function(event) {
-	// guesses gets reset to an empty string so the previous guesses aren't concatenated.
-	guesses = "";
-	if(gameMode == "easy") {
-		guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value;
-	} 
-	else if(gameMode == "normal") {
-		guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value + " " + guessInput5.value + " " + guessInput6.value;
-	}
-	else if(gameMode == "hard") {
-		guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value + " " + guessInput5.value + " " + guessInput6.value + " " + guessInput7.value + " " + guessInput8.value;
-	}
-		getGuess();
-	// console.log(guesses);
+// submitButton.addEventListener("click", function(event) {
+// 	// guesses gets reset to an empty string so the previous guesses aren't concatenated.
+// 	guesses = "";
+// 	if(gameMode == "easy") {
+// 		guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value;
+// 	} 
+// 	else if(gameMode == "normal") {
+// 		guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value + " " + guessInput5.value + " " + guessInput6.value;
+// 	}
+// 	else if(gameMode == "hard") {
+// 		guesses = guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value + " " + guessInput5.value + " " + guessInput6.value + " " + guessInput7.value + " " + guessInput8.value;
+// 	}
+// 		getGuess();
+// 	// console.log(guesses);
+// });
+
+checkGuessButton.addEventListener("click", function(event) {
+	console.log("check guess btn clicked");
+	checkGuessColorBank();
 });
 
-bankRed.addEventListener("click", function(event) {
+bankRed.addEventListener("click", function a(event) {
 		console.log("bankRed clicked");
-		currentGuess = "R";
-		console.log("current guess:", currentGuess);
-		getGuessColorBank();
+		// console.log("current guess:", currentGuess);
+		if(codeGuessNumber < codeNumber) {
+			currentGuess = "R";
+			getGuessColorBank();
+			colorBankCreateBoxes(colorBankGuesses);
+			codeGuessNumber++;
+		}
+		removeColorBankListener(bankRed, a);
 });
-bankOrange.addEventListener("click", function(event) {
+bankOrange.addEventListener("click", function a(event) {
 		console.log("bankOrange clicked");
-		currentGuess = "O";
-		console.log("current guess:", currentGuess);
-		getGuessColorBank();
+		// console.log("current guess:", currentGuess);
+		if(codeGuessNumber < codeNumber) {
+			currentGuess = "O";
+			getGuessColorBank();
+			colorBankCreateBoxes(colorBankGuesses);
+			codeGuessNumber++;
+		}
+		removeColorBankListener(bankOrange, a);
 });
-bankYellow.addEventListener("click", function(event) {
+bankYellow.addEventListener("click", function a(event) {
 		console.log("bankYellow clicked");
-		currentGuess = "Y";
-		console.log("current guess:", currentGuess);
-		getGuessColorBank();
+		// console.log("current guess:", currentGuess);
+		if(codeGuessNumber < codeNumber) {
+			currentGuess = "Y";
+			getGuessColorBank();
+			colorBankCreateBoxes(colorBankGuesses);
+			codeGuessNumber++;
+		}
+		removeColorBankListener(bankYellow, a);
 });
-bankGreen.addEventListener("click", function(event) {
+bankGreen.addEventListener("click", function a(event) {
 		console.log("bankGreen clicked");
-		currentGuess = "G";
-		console.log("current guess:", currentGuess);
-		getGuessColorBank();
+		// console.log("current guess:", currentGuess);
+		if(codeGuessNumber < codeNumber) {
+			currentGuess = "G";
+			getGuessColorBank();
+			colorBankCreateBoxes(colorBankGuesses);
+			codeGuessNumber++;
+		}
+		removeColorBankListener(bankGreen, a);
 });
-bankBlue.addEventListener("click", function(event) {
+bankBlue.addEventListener("click", function a(event) {
 		console.log("bankBlue clicked");
-		currentGuess = "B";
-		console.log("current guess:", currentGuess);
-		getGuessColorBank();
+		// console.log("current guess:", currentGuess);
+		if(codeGuessNumber < codeNumber) {
+			currentGuess = "B";
+			getGuessColorBank();
+			colorBankCreateBoxes(colorBankGuesses);
+			codeGuessNumber++;
+		}
+		removeColorBankListener(bankBlue, a);
 });
-bankPurple.addEventListener("click", function(event) {
+bankPurple.addEventListener("click", function a(event) {
 		console.log("bankPurple clicked");
-		currentGuess = "P";
-		console.log("current guess:", currentGuess);
-		getGuessColorBank();
+		// console.log("current guess:", currentGuess);
+		if(codeGuessNumber < codeNumber) {
+			currentGuess = "P";
+			getGuessColorBank();
+			colorBankCreateBoxes(colorBankGuesses);
+			codeGuessNumber++;
+		}
+		removeColorBankListener(bankPurple, a);
 });
-bankMagenta.addEventListener("click", function(event) {
+bankMagenta.addEventListener("click", function a(event) {
 		console.log("bankMagenta clicked");
-		currentGuess = "M";
-		console.log("current guess:", currentGuess);
-		getGuessColorBank();
+		// console.log("current guess:", currentGuess);
+		if(codeGuessNumber < codeNumber) {
+			currentGuess = "M";
+			getGuessColorBank();
+			colorBankCreateBoxes(colorBankGuesses);
+			codeGuessNumber++;
+		}
+		removeColorBankListener(bankMagenta, a);
 });
-bankLime.addEventListener("click", function(event) {
+bankLime.addEventListener("click", function a(event) {
 		console.log("bankLime clicked");
-		currentGuess = "L";
-		console.log("current guess:", currentGuess);
-		getGuessColorBank();
+		// console.log("current guess:", currentGuess);
+		if(codeGuessNumber < codeNumber) {
+			currentGuess = "L";
+			getGuessColorBank();
+			colorBankCreateBoxes(colorBankGuesses);
+			codeGuessNumber++;
+		}
+		removeColorBankListener(bankLime, a);
 });
-bankCyan.addEventListener("click", function(event) {
+bankCyan.addEventListener("click", function a(event) {
 		console.log("bankCyan clicked");
-		currentGuess = "C";
-		console.log("current guess:", currentGuess);
-		getGuessColorBank();
+		// console.log("current guess:", currentGuess);
+		if(codeGuessNumber < codeNumber) {
+			currentGuess = "C";
+			getGuessColorBank();
+			colorBankCreateBoxes(colorBankGuesses);
+			codeGuessNumber++;
+		}
+		removeColorBankListener(bankCyan, a);
 });
-bankSienna.addEventListener("click", function(event) {
+bankSienna.addEventListener("click", function a(event) {
 		console.log("bankSienna clicked");
-		currentGuess = "S";
-		console.log("current guess:", currentGuess);
-		getGuessColorBank();
+		// console.log("current guess:", currentGuess);
+		if(codeGuessNumber < codeNumber) {
+			currentGuess = "S";
+			getGuessColorBank();
+			colorBankCreateBoxes(colorBankGuesses);
+			codeGuessNumber++;
+		}
+		removeColorBankListener(bankSienna, a);
 });
 
 function gameSetUp() {
@@ -318,12 +381,17 @@ function gameSetUp() {
 	// guessesArchiveString = gameStats.shared.guessesArchiveString;
 	// hintsArchiveString = gameStats.shared.hintsArchiveString;
 	code = gameStats.shared.code;
+	hints = gameStats.shared.hints;
 	guesses = gameStats.shared.guesses;
 	guessesArchive = gameStats.shared.guessesArchive;
+	guessesArchiveString = gameStats.shared.guessesArchiveString;
 	hintsArchive = gameStats.shared.hintsArchive;
 	guessBankDisplay = gameStats.shared.guessBankDisplay;
 	currentGuess = gameStats.shared.currentGuess;
 	colorBankGuesses = gameStats.shared.colorBankGuesses;
+	isInCode = gameStats.shared.isInCode;
+	isExactMatch = gameStats.shared.isExactMatch;
+	codeGuessNumber = gameStats.shared.codeGuessNumber;
 
 	if(gameMode == "easy") {
 		codeNumber = gameStats.easy.codeNumber;
@@ -345,7 +413,7 @@ function gameSetUp() {
 	// resetGame();
 
 function genCode(codeNumber) {
-	code = [];
+	// code = [];
 	var tempCode = [];
 
 	while(tempCode.length < codeNumber) {
@@ -360,6 +428,8 @@ function genCode(codeNumber) {
 
 	displayTurns();
 	// console.log("code :", code);
+
+	return code
 }
 
 // this potentially isn't very flexible if we want a bigger code
@@ -374,14 +444,81 @@ function genNum() {
 // once getGuessColorBank() works, remove getGuess and re-use that name
 // also TODO: refactor into 2 functions, getGuess and checkGuess
 function getGuessColorBank() {
-	var isInCode;
-	var isExactMatch = 0;
-	var hints = [];
-	var guessesArchiveString = "";
-	var hintsArchiveString = "";
-
 	colorBankGuesses.push(currentGuess);
 	console.log("color bank guesses:", colorBankGuesses);
+}
+
+function checkGuessColorBank() {
+	console.log("check guess color bank guesses:", colorBankGuesses);
+	console.log("check guess color bank code:", code);
+	console.log(colorBankGuesses.length);
+	console.log(code.length);
+	for(var i = 0; i < colorBankGuesses.length; i++) {
+
+		if(colorBankGuesses[i] == code[i]) {
+			console.log("match!", colorBankGuesses[i], code[i]); // black key peg
+			isExactMatch++;
+			hints.push("*");
+		} else if(code.includes(colorBankGuesses[i])) {
+			console.log(colorBankGuesses[i] + " is in the code."); // white key peg
+			isInCode++;
+			hints.push("o");
+		}
+	}
+	console.log("hints:", hints);
+}
+
+// add color-bg class based on guesses[i] content
+function colorBankCreateBoxes(array) {
+	var testString = "";
+	var boxClass = "";
+	for(var i = 0; i < array.length; i++) {
+		if(array[i] == "R") {
+			testString += `<div class="boxes red">R</div> `;
+		}		
+		else if(array[i] == "O") {
+			testString += `<div class="boxes orange">O</div> `;
+		}		
+		else if(array[i] == "Y") {
+			testString += `<div class="boxes yellow">Y</div> `;
+		}		
+		else if(array[i] == "G") {
+			testString += `<div class="boxes green">G</div> `;
+		}		
+		else if(array[i] == "B") {
+			testString += `<div class="boxes blue">B</div> `;
+		}		
+		else if(array[i] == "P") {
+			testString += `<div class="boxes purple">P</div> `;
+		}
+		else if(array[i] == "M") {
+			testString += `<div class="boxes magenta">M</div> `;
+		}				
+		else if(array[i] == "L") {
+			testString += `<div class="boxes lime">L</div> `;
+		}				
+		else if(array[i] == "C") {
+			testString += `<div class="boxes cyan">C</div> `;
+		}				
+		else if(array[i] == "S") {
+			testString += `<div class="boxes sienna">S</div> `;
+		}
+	}
+		guessesDisplay.innerHTML = testString;
+		console.log(testString);
+}
+
+function colorBankDisplayArchives() {
+	guessesArchive.push(colorBankGuesses);
+	hintsArchive.push(hints);
+
+	console.log("guessesArchive:", guessesArchive);
+	console.log("hintsArchive:", hintsArchive);
+
+	// displayColorBoxes(guessesArchive, guessesArchiveString, guessesArchiveDisplay);
+	// assignBgColor(guessesArchive, guessesArchiveDisplay, 0);
+	// addColorLetterToBoxDisplay(guessesArchiveDisplay, guessesArchive, 0);
+
 }
 
 // get user guess and compare guess against code
@@ -566,6 +703,10 @@ function addColorLetterToBoxDisplay(boxNum, guessInput) {
 	boxNum.textContent = guessInput.value.toUpperCase();
 }
 
+function colorBankAddLetterToBoxDisplay(boxNum, array, index) {
+	boxNum.textContent = array[index];
+}
+
 // add color-bg class based on guesses[i] content
 function assignBgColor(guesses, display, index) {
 	display.setAttribute("class", "boxes");
@@ -612,6 +753,29 @@ function isGameOver(isExactMatch) {
 		disableInputs();
 		endofGameStatusDisplay();
 		statusDisplay.textContent = "You're out of turns.";
+	}
+}
+
+function removeColorBankListener(box, a) {
+		if(codeGuessNumber == codeNumber) {
+		console.log("You're at the maximum guess number.");
+		box.removeEventListener("click", a);
+		bankRed.setAttribute("class", "boxes engaged");
+		bankOrange.setAttribute("class", "boxes engaged");
+		bankYellow.setAttribute("class", "boxes engaged");
+		bankGreen.setAttribute("class", "boxes engaged");
+		bankBlue.setAttribute("class", "boxes engaged");
+		bankPurple.setAttribute("class", "boxes engaged");
+		if(gameMode == "normal") {
+			bankMagenta.setAttribute("class", "boxes engaged");
+			bankLime.setAttribute("class", "boxes engaged");
+		}
+		if(gameMode == "hard") {
+			bankMagenta.setAttribute("class", "boxes engaged");
+			bankLime.setAttribute("class", "boxes engaged");
+			bankCyan.setAttribute("class", "boxes engaged");
+			bankSienna.setAttribute("class", "boxes engaged");
+		}
 	}
 }
 
