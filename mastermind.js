@@ -13,9 +13,6 @@
 	// for every correct color and incorrect location, use a white peg 
 // game ends when the code is guessed or number of turns maxed out
 
-
-// TODO disallow an empty guess
-
 //game mode buttons
 var gameModeEasy = document.querySelector("#easy");
 var gameModeNormal = document.querySelector("#normal");
@@ -184,14 +181,20 @@ gameModeHard.addEventListener("click", function() {
 // otherwise "you're out of turns" displays even if you won on the last turn
 checkGuessButton.addEventListener("click", function(event) {
 	console.log("check guess btn clicked");
-	turnNumber--;
-	checkGuess();
-	displayOldGuesses();
-	storeOldGuesses();
-	displayCurrentHints();
-	storeOldHints();
-	displayOldHints()
-	displayTurns();
+	if(guesses.length != codeNumber) {
+		statusDisplay.classList.remove("no-display");
+		statusDisplay.textContent = "You're missing at least one guess."
+	} else {
+		statusDisplay.classList.add("no-display");
+		checkGuess();
+		displayOldGuesses();
+		storeOldGuesses();
+		displayCurrentHints();
+		storeOldHints();
+		displayOldHints()
+		displayTurns();
+		turnNumber--;
+	}
 });
 
 resetTurnButton.addEventListener("click", function(event) {
@@ -338,9 +341,6 @@ function gameSetUp() {
 	genCode(codeNumber);
 }
 
-// TODO reset all displays and underlying vars on-click of game modes
-	// resetGame();
-
 function genCode(codeNumber) {
 	var tempCode = [];
 
@@ -363,14 +363,12 @@ function genNum() {
 	return x;
 }
 
-// once getGuess() works, remove getGuess and re-use that name
 function getGuess() {
 	guesses.push(currentGuess);
 }
 
 function checkGuess() {
 	for(var i = 0; i < guesses.length; i++) {
-
 		if(guesses[i] == code[i]) {
 			// console.log("match!", guesses[i], code[i]); // black key peg
 			isExactMatch++;
