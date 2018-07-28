@@ -191,8 +191,8 @@ checkGuessButton.addEventListener("click", function(event) {
 		displayCurrentHints();
 		storeOldHints();
 		displayOldHints()
-		displayTurns();
 		turnNumber--;
+		displayTurns();
 	}
 });
 
