@@ -54,25 +54,7 @@
 	<p class="color-instructions no-display" id="normal-number">Guess <strong>six</strong> colors. There are no repeats.</p>
 	<p class="color-instructions no-display" id="hard-number">Guess <strong>eight</strong> colors. There are no repeats.</p>
 	
-	<div class="hint-instructions">
-		<h2>How To Play:</h2>
-		<p>To make a guess, click the boxes in the <strong>color bank</strong>. Then, click <strong>Check</strong> to check your guess against the secret code. To make your next guess, click <strong>Reset Turn</strong>.</p>
-		<p>If you want to change your guess before checking, click <strong>Reset Turn</strong>.</p>
-		<p>The <strong>*</strong> hint means you have the correct color in the correct place. The <strong>o</strong> hint means you have the correct color but in the wrong place. The placement of the hints do <strong>not</strong> correspond with the colors' locations.</p>
-		<p>The game ends when you've guessed the secret code or you run out of turns.</p>
-	</div>
-
 	<div class="game-area">
-		<h2 class="no-display status" id="status-display"></h2>
-
-		<div id="code-container" class="no-display">Code : 
-			<span id="code"></span>
-		</div>
-		<div>Guess: 
-			<span id="guesses"></span>
-		</div>
-
-		<div>Hints: <span class="hints-display"></span></div>
 
 		<fieldset class="color-bank">
 			<legend>Color Bank:</legend>
@@ -92,9 +74,21 @@
 			<button name="reset-turn" value="reset-turn">Reset Turn</button>
 			<button name="reset-game" value="reset-game" class="green no-display">Play Again?</button>
 		</fieldset>
-	</div>
 
-	<p>Turns Left: <span id="turns-left"></span></p>
+		<p>Turns Left: <span id="turns-left"></span></p>
+
+		<h2 class="no-display status" id="status-display"></h2>
+
+		<div id="code-container" class="no-display">Code : 
+			<span id="code"></span>
+		</div>
+		<div>Guess: 
+			<span id="guesses"></span>
+		</div>
+
+		<div>Hints: <span class="hints-display"></span></div>
+
+	</div>
 
 	<div class="archive">
 		<div class="guess-archive">
@@ -107,8 +101,15 @@
 		</div>
 	</div>
 
+<div id="instructions">
+	<h2>How To Play:</h2>
+	<p>To make a guess, click the boxes in the <strong>color bank</strong>. Then, click <strong>Check</strong> to check your guess against the secret code. To make your next guess, click <strong>Reset Turn</strong>.</p>
+	<p>If you want to change your guess before checking, click <strong>Reset Turn</strong>.</p>
+	<p>The <strong>*</strong> hint means you have the correct color in the correct place. The <strong>o</strong> hint means you have the correct color but in the wrong place. The placement of the hints do <strong>not</strong> correspond with the colors' locations.</p>
+	<p>The game ends when you've guessed the secret code or you run out of turns. To play again, either refresh the page or click <strong>Play Again?</strong>.</p>
 </div>
 
+</div>
 
 <script type="text/javascript" src="mastermind.js"></script>
 </body>
