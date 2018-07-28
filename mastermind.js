@@ -64,14 +64,13 @@ var gameMode = "easy";
 var gameStats = {
 	shared: {
 		code: [],
+		guesses: [],
 		guessesArchive: [],
 		guessesArchiveString: "",
+		currentGuess: "",
+		hints: [],
 		hintsArchive: [],
 		hintsArchiveString: "",
-		guessBankDisplay: "",
-		currentGuess: "",
-		guesses: [],
-		hints: [],
 		isInCode: 0,
 		isExactMatch: 0,
 		codeGuessNumber: 0,
@@ -206,8 +205,6 @@ resetGameButton.addEventListener("click", function(event) {
 	// console.log("play again btn clicked");
 	resetGame();
 	gameSetUp();
-	console.log(guesses);
-	console.log(code);
 })
 
 bankRed.addEventListener("click", function(event) {
@@ -259,7 +256,6 @@ function gameSetUp() {
 	guessesArchiveString = gameStats.shared.guessesArchiveString;
 	hintsArchive = gameStats.shared.hintsArchive;
 	hintsArchiveString = gameStats.shared.hintsArchiveString;
-	guessBankDisplay = gameStats.shared.guessBankDisplay;
 	currentGuess = gameStats.shared.currentGuess;
 	isInCode = gameStats.shared.isInCode;
 	isExactMatch = gameStats.shared.isExactMatch;
@@ -420,7 +416,7 @@ function isGameOver() {
 
 function disableColorBank() {
 		// if(codeGuessNumber == codeNumber) {
-		console.log("You're at the maximum guess number.");
+		// console.log("You're at the maximum guess number.");
 		bankRed.setAttribute("class", "boxes engaged");
 		bankOrange.setAttribute("class", "boxes engaged");
 		bankYellow.setAttribute("class", "boxes engaged");
