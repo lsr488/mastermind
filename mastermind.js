@@ -263,14 +263,15 @@ resetTurnButton.addEventListener("click", function(event) {
 	resetTurn();
 });
 
+// isGameOver() runs inside checkGuessColorBank()
+// otherwise "you're out of turns" displays even if you won on the last turn
 checkGuessButton.addEventListener("click", function(event) {
 	console.log("check guess btn clicked");
-	checkGuessColorBank();
-	colorBankDisplayArchives();
-	storeOldGuesses();
 	turnNumber--;
+	checkGuessColorBank();
+	displayOldGuesses();
+	storeOldGuesses();
 	displayTurns();
-	isGameOver();
 });
 
 bankRed.addEventListener("click", function a(event) {
@@ -467,6 +468,7 @@ function checkGuessColorBank() {
 		if(colorBankGuesses[i] == code[i]) {
 			console.log("match!", colorBankGuesses[i], code[i]); // black key peg
 			isExactMatch++;
+			// console.log("isExactMatch", isExactMatch);
 			hints.push("*");
 		} else if(code.includes(colorBankGuesses[i])) {
 			console.log(colorBankGuesses[i] + " is in the code."); // white key peg
@@ -475,6 +477,7 @@ function checkGuessColorBank() {
 		}
 	}
 	console.log("hints:", hints);
+	isGameOver();
 }
 
 // add color-bg class based on guesses[i] content
@@ -525,7 +528,7 @@ function storeOldGuesses() {
 	guessesArchiveDisplay.innerHTML = guessesArchiveString;
 }
 
-function colorBankDisplayArchives() {
+function displayOldGuesses() {
 	guessesArchive.push(colorBankGuesses);
 	guessesArchive.forEach(function(turn) {
 		console.log("turn:", turn);
@@ -758,7 +761,7 @@ function assignBgColor(guesses, display, index) {
 	}
 }
 
-function isGameOver(isExactMatch) {
+function isGameOver() {
 	if(isExactMatch == 4) {
 		endOfGameDisplay();
 		// disableInputs();
@@ -769,6 +772,9 @@ function isGameOver(isExactMatch) {
 		// disableInputs();
 		endofGameStatusDisplay();
 		statusDisplay.textContent = "You're out of turns.";
+	}
+	else {
+		console.log("I'm afraid I can't do that, Dave.");
 	}
 }
 
