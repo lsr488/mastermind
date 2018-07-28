@@ -98,6 +98,7 @@ var gameStats = {
 		guessesArchive: [],
 		guessesArchiveString: "",
 		hintsArchive: [],
+		hintsArchiveString: "",
 		guessBankDisplay: "",
 		currentGuess: "",
 		colorBankGuesses: [],
@@ -105,8 +106,7 @@ var gameStats = {
 		isInCode: "",
 		isExactMatch: "",
 		codeGuessNumber: 0,
-		// hintsArchiveString: ""
-		// // gameMode: "easy"
+		// gameMode: "easy"
 	},
 	easy: {
 		colors: ["R", "O", "Y", "G", "B", "P"],
@@ -260,6 +260,10 @@ gameModeHard.addEventListener("click", function() {
 
 resetTurnButton.addEventListener("click", function(event) {
 	console.log("reset btn clicked");
+	displayOldGuesses();
+	storeOldGuesses();
+	storeOldHints();
+	displayOldHints();
 	resetTurn();
 });
 
@@ -269,8 +273,7 @@ checkGuessButton.addEventListener("click", function(event) {
 	console.log("check guess btn clicked");
 	turnNumber--;
 	checkGuessColorBank();
-	displayOldGuesses();
-	storeOldGuesses();
+	displayCurrentHints();
 	displayTurns();
 });
 
@@ -397,6 +400,7 @@ function gameSetUp() {
 	guessesArchive = gameStats.shared.guessesArchive;
 	guessesArchiveString = gameStats.shared.guessesArchiveString;
 	hintsArchive = gameStats.shared.hintsArchive;
+	hintsArchiveString = gameStats.shared.hintsArchiveString;
 	guessBankDisplay = gameStats.shared.guessBankDisplay;
 	currentGuess = gameStats.shared.currentGuess;
 	colorBankGuesses = gameStats.shared.colorBankGuesses;
@@ -514,30 +518,36 @@ function colorBankCreateBoxes(array, webDisplay) {
 		else if(array[i] == "S") {
 			stringAccumulator += `<div class="boxes sienna">S</div> `;
 		}
-		// console.log(stringAccumulator);
 	}
 		webDisplay.innerHTML = stringAccumulator + `<br/>`;
-		// storeOldGuesses();
 }
 
-
 function storeOldGuesses() {
-	console.log(guessesArchiveDisplay);
+	// console.log(guessesArchiveDisplay);
 	guessesArchiveString += guessesArchiveDisplay.innerHTML;
-	console.log("store old guesses:", guessesArchiveString);
+	// console.log("store old guesses:", guessesArchiveString);
 	guessesArchiveDisplay.innerHTML = guessesArchiveString;
 }
 
 function displayOldGuesses() {
 	guessesArchive.push(colorBankGuesses);
 	guessesArchive.forEach(function(turn) {
-		console.log("turn:", turn);
+		// console.log("turn:", turn);
 		colorBankCreateBoxes(turn, guessesArchiveDisplay);
 	});
-	
-	// hintsArchive = hints;
+}
 
+function displayCurrentHints() {
+	hintsDisplay.innerHTML = hints.join(" ");
+}
 
+function storeOldHints() {
+	hintsArchiveString += `<div class="hint">${hintsDisplay.innerHTML}</div>`;
+	// console.log("hints archive string:", hintsArchiveString);
+}
+
+function displayOldHints() {
+	hintsArchiveDisplay.innerHTML = hintsArchiveString;
 }
 
 // get user guess and compare guess against code
@@ -773,9 +783,6 @@ function isGameOver() {
 		endofGameStatusDisplay();
 		statusDisplay.textContent = "You're out of turns.";
 	}
-	else {
-		console.log("I'm afraid I can't do that, Dave.");
-	}
 }
 
 function disableColorBank() {
@@ -824,6 +831,7 @@ function resetTurn() {
 	guessesDisplay.textContent = "";
 	colorBankGuesses = [];
 	hints = [];
+	hintsDisplay.textContent = "";
 	enableColorBank();
 }
 
