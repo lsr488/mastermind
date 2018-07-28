@@ -84,6 +84,7 @@ var bankLime = document.querySelector("#bank-lime");
 var bankCyan = document.querySelector("#bank-cyan");
 var bankSienna = document.querySelector("#bank-sienna");
 var checkGuessButton = document.getElementsByName("check-guess")[0];
+var resetTurnButton = document.getElementsByName("reset-turn")[0];
 
 // misc displays
 var turnsLeftDisplay = document.querySelector("#turns-left");
@@ -95,6 +96,7 @@ var gameStats = {
 		code: [],
 		guesses: "",
 		guessesArchive: [],
+		guessesArchiveString: "",
 		hintsArchive: [],
 		guessBankDisplay: "",
 		currentGuess: "",
@@ -102,7 +104,6 @@ var gameStats = {
 		hints: [],
 		isInCode: "",
 		isExactMatch: "",
-		guessesArchiveString: "",
 		codeGuessNumber: 0,
 		// hintsArchiveString: ""
 		// // gameMode: "easy"
@@ -241,7 +242,6 @@ gameModeHard.addEventListener("click", function() {
 	gameSetUp();
 });
 
-// TODO make this more flexible for more input options
 // submitButton.addEventListener("click", function(event) {
 // 	// guesses gets reset to an empty string so the previous guesses aren't concatenated.
 // 	guesses = "";
@@ -258,9 +258,19 @@ gameModeHard.addEventListener("click", function() {
 // 	// console.log(guesses);
 // });
 
+resetTurnButton.addEventListener("click", function(event) {
+	console.log("reset btn clicked");
+	resetTurn();
+});
+
 checkGuessButton.addEventListener("click", function(event) {
 	console.log("check guess btn clicked");
 	checkGuessColorBank();
+	colorBankDisplayArchives();
+	storeOldGuesses();
+	turnNumber--;
+	displayTurns();
+	isGameOver();
 });
 
 bankRed.addEventListener("click", function a(event) {
@@ -269,10 +279,10 @@ bankRed.addEventListener("click", function a(event) {
 		if(codeGuessNumber < codeNumber) {
 			currentGuess = "R";
 			getGuessColorBank();
-			colorBankCreateBoxes(colorBankGuesses);
+			colorBankCreateBoxes(colorBankGuesses, guessesDisplay);
 			codeGuessNumber++;
 		}
-		removeColorBankListener(bankRed, a);
+		disableColorBank(bankRed, a);
 });
 bankOrange.addEventListener("click", function a(event) {
 		console.log("bankOrange clicked");
@@ -280,10 +290,10 @@ bankOrange.addEventListener("click", function a(event) {
 		if(codeGuessNumber < codeNumber) {
 			currentGuess = "O";
 			getGuessColorBank();
-			colorBankCreateBoxes(colorBankGuesses);
+			colorBankCreateBoxes(colorBankGuesses, guessesDisplay);
 			codeGuessNumber++;
 		}
-		removeColorBankListener(bankOrange, a);
+		disableColorBank(bankOrange, a);
 });
 bankYellow.addEventListener("click", function a(event) {
 		console.log("bankYellow clicked");
@@ -291,10 +301,10 @@ bankYellow.addEventListener("click", function a(event) {
 		if(codeGuessNumber < codeNumber) {
 			currentGuess = "Y";
 			getGuessColorBank();
-			colorBankCreateBoxes(colorBankGuesses);
+			colorBankCreateBoxes(colorBankGuesses, guessesDisplay);
 			codeGuessNumber++;
 		}
-		removeColorBankListener(bankYellow, a);
+		disableColorBank(bankYellow, a);
 });
 bankGreen.addEventListener("click", function a(event) {
 		console.log("bankGreen clicked");
@@ -302,10 +312,10 @@ bankGreen.addEventListener("click", function a(event) {
 		if(codeGuessNumber < codeNumber) {
 			currentGuess = "G";
 			getGuessColorBank();
-			colorBankCreateBoxes(colorBankGuesses);
+			colorBankCreateBoxes(colorBankGuesses, guessesDisplay);
 			codeGuessNumber++;
 		}
-		removeColorBankListener(bankGreen, a);
+		disableColorBank(bankGreen, a);
 });
 bankBlue.addEventListener("click", function a(event) {
 		console.log("bankBlue clicked");
@@ -313,10 +323,10 @@ bankBlue.addEventListener("click", function a(event) {
 		if(codeGuessNumber < codeNumber) {
 			currentGuess = "B";
 			getGuessColorBank();
-			colorBankCreateBoxes(colorBankGuesses);
+			colorBankCreateBoxes(colorBankGuesses, guessesDisplay);
 			codeGuessNumber++;
 		}
-		removeColorBankListener(bankBlue, a);
+		disableColorBank(bankBlue, a);
 });
 bankPurple.addEventListener("click", function a(event) {
 		console.log("bankPurple clicked");
@@ -324,10 +334,10 @@ bankPurple.addEventListener("click", function a(event) {
 		if(codeGuessNumber < codeNumber) {
 			currentGuess = "P";
 			getGuessColorBank();
-			colorBankCreateBoxes(colorBankGuesses);
+			colorBankCreateBoxes(colorBankGuesses, guessesDisplay);
 			codeGuessNumber++;
 		}
-		removeColorBankListener(bankPurple, a);
+		disableColorBank(bankPurple, a);
 });
 bankMagenta.addEventListener("click", function a(event) {
 		console.log("bankMagenta clicked");
@@ -335,10 +345,10 @@ bankMagenta.addEventListener("click", function a(event) {
 		if(codeGuessNumber < codeNumber) {
 			currentGuess = "M";
 			getGuessColorBank();
-			colorBankCreateBoxes(colorBankGuesses);
+			colorBankCreateBoxes(colorBankGuesses, guessesDisplay);
 			codeGuessNumber++;
 		}
-		removeColorBankListener(bankMagenta, a);
+		disableColorBank(bankMagenta, a);
 });
 bankLime.addEventListener("click", function a(event) {
 		console.log("bankLime clicked");
@@ -346,10 +356,10 @@ bankLime.addEventListener("click", function a(event) {
 		if(codeGuessNumber < codeNumber) {
 			currentGuess = "L";
 			getGuessColorBank();
-			colorBankCreateBoxes(colorBankGuesses);
+			colorBankCreateBoxes(colorBankGuesses, guessesDisplay);
 			codeGuessNumber++;
 		}
-		removeColorBankListener(bankLime, a);
+		disableColorBank(bankLime, a);
 });
 bankCyan.addEventListener("click", function a(event) {
 		console.log("bankCyan clicked");
@@ -357,10 +367,10 @@ bankCyan.addEventListener("click", function a(event) {
 		if(codeGuessNumber < codeNumber) {
 			currentGuess = "C";
 			getGuessColorBank();
-			colorBankCreateBoxes(colorBankGuesses);
+			colorBankCreateBoxes(colorBankGuesses, guessesDisplay);
 			codeGuessNumber++;
 		}
-		removeColorBankListener(bankCyan, a);
+		disableColorBank(bankCyan, a);
 });
 bankSienna.addEventListener("click", function a(event) {
 		console.log("bankSienna clicked");
@@ -368,17 +378,17 @@ bankSienna.addEventListener("click", function a(event) {
 		if(codeGuessNumber < codeNumber) {
 			currentGuess = "S";
 			getGuessColorBank();
-			colorBankCreateBoxes(colorBankGuesses);
+			colorBankCreateBoxes(colorBankGuesses, guessesDisplay);
 			codeGuessNumber++;
 		}
-		removeColorBankListener(bankSienna, a);
+		disableColorBank(bankSienna, a);
 });
 
 function gameSetUp() {
 	// var codeNumber = "";
 
 	// gameMode = gameStats.shared.gameMode;
-	// guessesArchiveString = gameStats.shared.guessesArchiveString;
+	guessesArchiveString = gameStats.shared.guessesArchiveString;
 	// hintsArchiveString = gameStats.shared.hintsArchiveString;
 	code = gameStats.shared.code;
 	hints = gameStats.shared.hints;
@@ -442,17 +452,16 @@ function genNum() {
 }
 
 // once getGuessColorBank() works, remove getGuess and re-use that name
-// also TODO: refactor into 2 functions, getGuess and checkGuess
 function getGuessColorBank() {
 	colorBankGuesses.push(currentGuess);
-	console.log("color bank guesses:", colorBankGuesses);
+	// console.log("color bank guesses:", colorBankGuesses);
 }
 
 function checkGuessColorBank() {
 	console.log("check guess color bank guesses:", colorBankGuesses);
 	console.log("check guess color bank code:", code);
-	console.log(colorBankGuesses.length);
-	console.log(code.length);
+	// console.log(colorBankGuesses.length);
+	// console.log(code.length);
 	for(var i = 0; i < colorBankGuesses.length; i++) {
 
 		if(colorBankGuesses[i] == code[i]) {
@@ -469,60 +478,67 @@ function checkGuessColorBank() {
 }
 
 // add color-bg class based on guesses[i] content
-function colorBankCreateBoxes(array) {
-	var testString = "";
-	var boxClass = "";
+function colorBankCreateBoxes(array, webDisplay) {
+	var stringAccumulator = "";
 	for(var i = 0; i < array.length; i++) {
 		if(array[i] == "R") {
-			testString += `<div class="boxes red">R</div> `;
+			stringAccumulator += `<div class="boxes red">R</div> `;
 		}		
 		else if(array[i] == "O") {
-			testString += `<div class="boxes orange">O</div> `;
+			stringAccumulator += `<div class="boxes orange">O</div> `;
 		}		
 		else if(array[i] == "Y") {
-			testString += `<div class="boxes yellow">Y</div> `;
+			stringAccumulator += `<div class="boxes yellow">Y</div> `;
 		}		
 		else if(array[i] == "G") {
-			testString += `<div class="boxes green">G</div> `;
+			stringAccumulator += `<div class="boxes green">G</div> `;
 		}		
 		else if(array[i] == "B") {
-			testString += `<div class="boxes blue">B</div> `;
+			stringAccumulator += `<div class="boxes blue">B</div> `;
 		}		
 		else if(array[i] == "P") {
-			testString += `<div class="boxes purple">P</div> `;
+			stringAccumulator += `<div class="boxes purple">P</div> `;
 		}
 		else if(array[i] == "M") {
-			testString += `<div class="boxes magenta">M</div> `;
+			stringAccumulator += `<div class="boxes magenta">M</div> `;
 		}				
 		else if(array[i] == "L") {
-			testString += `<div class="boxes lime">L</div> `;
+			stringAccumulator += `<div class="boxes lime">L</div> `;
 		}				
 		else if(array[i] == "C") {
-			testString += `<div class="boxes cyan">C</div> `;
+			stringAccumulator += `<div class="boxes cyan">C</div> `;
 		}				
 		else if(array[i] == "S") {
-			testString += `<div class="boxes sienna">S</div> `;
+			stringAccumulator += `<div class="boxes sienna">S</div> `;
 		}
+		// console.log(stringAccumulator);
 	}
-		guessesDisplay.innerHTML = testString;
-		console.log(testString);
+		webDisplay.innerHTML = stringAccumulator + `<br/>`;
+		// storeOldGuesses();
+}
+
+
+function storeOldGuesses() {
+	console.log(guessesArchiveDisplay);
+	guessesArchiveString += guessesArchiveDisplay.innerHTML;
+	console.log("store old guesses:", guessesArchiveString);
+	guessesArchiveDisplay.innerHTML = guessesArchiveString;
 }
 
 function colorBankDisplayArchives() {
 	guessesArchive.push(colorBankGuesses);
-	hintsArchive.push(hints);
+	guessesArchive.forEach(function(turn) {
+		console.log("turn:", turn);
+		colorBankCreateBoxes(turn, guessesArchiveDisplay);
+	});
+	
+	// hintsArchive = hints;
 
-	console.log("guessesArchive:", guessesArchive);
-	console.log("hintsArchive:", hintsArchive);
-
-	// displayColorBoxes(guessesArchive, guessesArchiveString, guessesArchiveDisplay);
-	// assignBgColor(guessesArchive, guessesArchiveDisplay, 0);
-	// addColorLetterToBoxDisplay(guessesArchiveDisplay, guessesArchive, 0);
 
 }
 
 // get user guess and compare guess against code
-// TODO: refactor into 2 functions, getGuess and checkGuess
+// refactor into 2 functions, getGuess and checkGuess
 function getGuess() {
 	var isInCode = 0;
 	// var isNotInCode = 0;
@@ -636,7 +652,7 @@ function getGuess() {
 	hintsDisplay.textContent = `(${hintsLength}) ` + hints.sort().join(" ");
 	hintsArchiveDisplay.innerHTML = hintsArchiveString;
 
-	// TODO: figure out how to make it more flexible
+	// TODO: figure out how to make it more flexible -- this prob isn't necessary
 	assignBgColor(guesses, firstColor, 0);
 	assignBgColor(guesses, secondColor, 1);
 	assignBgColor(guesses, thirdColor, 2);
@@ -745,21 +761,20 @@ function assignBgColor(guesses, display, index) {
 function isGameOver(isExactMatch) {
 	if(isExactMatch == 4) {
 		endOfGameDisplay();
-		disableInputs();
+		// disableInputs();
 		endofGameStatusDisplay();
 		statusDisplay.textContent = "You won!";
 	} else if(turnNumber == 0) {
 		endOfGameDisplay();
-		disableInputs();
+		// disableInputs();
 		endofGameStatusDisplay();
 		statusDisplay.textContent = "You're out of turns.";
 	}
 }
 
-function removeColorBankListener(box, a) {
+function disableColorBank() {
 		if(codeGuessNumber == codeNumber) {
 		console.log("You're at the maximum guess number.");
-		box.removeEventListener("click", a);
 		bankRed.setAttribute("class", "boxes engaged");
 		bankOrange.setAttribute("class", "boxes engaged");
 		bankYellow.setAttribute("class", "boxes engaged");
@@ -779,17 +794,44 @@ function removeColorBankListener(box, a) {
 	}
 }
 
-function disableInputs() {
-	guessInput1.setAttribute("disabled", "disabled");
-	guessInput2.setAttribute("disabled", "disabled");
-	guessInput3.setAttribute("disabled", "disabled");
-	guessInput4.setAttribute("disabled", "disabled");
-	guessInput5.setAttribute("disabled", "disabled");
-	guessInput6.setAttribute("disabled", "disabled");
-	guessInput7.setAttribute("disabled", "disabled");
-	guessInput8.setAttribute("disabled", "disabled");
-	submitButton.setAttribute("disabled", "disabled");
+function enableColorBank() {
+		bankRed.setAttribute("class", "boxes red");
+		bankOrange.setAttribute("class", "boxes orange");
+		bankYellow.setAttribute("class", "boxes yellow");
+		bankGreen.setAttribute("class", "boxes green");
+		bankBlue.setAttribute("class", "boxes blue");
+		bankPurple.setAttribute("class", "boxes purple");
+		if(gameMode == "normal") {
+			bankMagenta.setAttribute("class", "boxes magenta");
+			bankLime.setAttribute("class", "boxes lime");
+		}
+		if(gameMode == "hard") {
+			bankMagenta.setAttribute("class", "boxes magenta");
+			bankLime.setAttribute("class", "boxes lime");
+			bankCyan.setAttribute("class", "boxes cyan");
+			bankSienna.setAttribute("class", "boxes sienna");
+		}
 }
+
+function resetTurn() {
+	codeGuessNumber = 0;
+	guessesDisplay.textContent = "";
+	colorBankGuesses = [];
+	hints = [];
+	enableColorBank();
+}
+
+// function disableInputs() {
+// 	guessInput1.setAttribute("disabled", "disabled");
+// 	guessInput2.setAttribute("disabled", "disabled");
+// 	guessInput3.setAttribute("disabled", "disabled");
+// 	guessInput4.setAttribute("disabled", "disabled");
+// 	guessInput5.setAttribute("disabled", "disabled");
+// 	guessInput6.setAttribute("disabled", "disabled");
+// 	guessInput7.setAttribute("disabled", "disabled");
+// 	guessInput8.setAttribute("disabled", "disabled");
+// 	submitButton.setAttribute("disabled", "disabled");
+// }
 
 function endofGameStatusDisplay() {
 	codeContainerDisplay.classList.toggle("no-display");
@@ -822,7 +864,8 @@ function resetGame() {
 	hintsDisplay.textContent = "";
 	hintsArchiveDisplay.textContent = "";
 	guessesDisplay.textContent = "";
-	guessesDisplayArchive.textContent = "";
+	// guessesDisplayArchive.textContent = "";
+
 }
 
 gameSetUp();
