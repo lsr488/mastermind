@@ -180,7 +180,7 @@ gameModeHard.addEventListener("click", function() {
 // isGameOver() runs inside checkGuess()
 // otherwise "you're out of turns" displays even if you won on the last turn
 checkGuessButton.addEventListener("click", function(event) {
-	console.log("check guess btn clicked");
+	// console.log("check guess btn clicked");
 	if(guesses.length != codeNumber) {
 		statusDisplay.classList.remove("no-display");
 		statusDisplay.textContent = "You're missing at least one guess."
@@ -198,117 +198,57 @@ checkGuessButton.addEventListener("click", function(event) {
 });
 
 resetTurnButton.addEventListener("click", function(event) {
-	console.log("reset btn clicked");
+	// console.log("reset btn clicked");
 	resetTurn();
 });
 
 resetGameButton.addEventListener("click", function(event) {
-	console.log("play again btn clicked");
+	// console.log("play again btn clicked");
 	resetGame();
 	gameSetUp();
 	console.log(guesses);
 	console.log(code);
 })
 
-bankRed.addEventListener("click", function a(event) {
-		console.log("bankRed clicked");
-		if(codeGuessNumber < codeNumber) {
-			currentGuess = "R";
-			getGuess();
-			createBoxes(guesses, guessesDisplay);
-			codeGuessNumber++;
-		}
-		disableColorBank(bankRed, a);
+bankRed.addEventListener("click", function(event) {
+	// console.log("bankRed clicked");
+	checkButtonFunction.apply(this);
 });
-bankOrange.addEventListener("click", function a(event) {
-		console.log("bankOrange clicked");
-		if(codeGuessNumber < codeNumber) {
-			currentGuess = "O";
-			getGuess();
-			createBoxes(guesses, guessesDisplay);
-			codeGuessNumber++;
-		}
-		disableColorBank(bankOrange, a);
+bankOrange.addEventListener("click", function(event) {
+		// console.log("bankOrange clicked");
+	checkButtonFunction.apply(this);
 });
-bankYellow.addEventListener("click", function a(event) {
-		console.log("bankYellow clicked");
-		if(codeGuessNumber < codeNumber) {
-			currentGuess = "Y";
-			getGuess();
-			createBoxes(guesses, guessesDisplay);
-			codeGuessNumber++;
-		}
-		disableColorBank(bankYellow, a);
+bankYellow.addEventListener("click", function(event) {
+		// console.log("bankYellow clicked");
+	checkButtonFunction.apply(this);
 });
-bankGreen.addEventListener("click", function a(event) {
-		console.log("bankGreen clicked");
-		if(codeGuessNumber < codeNumber) {
-			currentGuess = "G";
-			getGuess();
-			createBoxes(guesses, guessesDisplay);
-			codeGuessNumber++;
-		}
-		disableColorBank(bankGreen, a);
+bankGreen.addEventListener("click", function(event) {
+		// console.log("bankGreen clicked");
+	checkButtonFunction.apply(this);
 });
-bankBlue.addEventListener("click", function a(event) {
-		console.log("bankBlue clicked");
-		if(codeGuessNumber < codeNumber) {
-			currentGuess = "B";
-			getGuess();
-			createBoxes(guesses, guessesDisplay);
-			codeGuessNumber++;
-		}
-		disableColorBank(bankBlue, a);
+bankBlue.addEventListener("click", function(event) {
+		// console.log("bankBlue clicked");
+	checkButtonFunction.apply(this);
 });
 bankPurple.addEventListener("click", function a(event) {
-		console.log("bankPurple clicked");
-		if(codeGuessNumber < codeNumber) {
-			currentGuess = "P";
-			getGuess();
-			createBoxes(guesses, guessesDisplay);
-			codeGuessNumber++;
-		}
-		disableColorBank(bankPurple, a);
+		// console.log("bankPurple clicked");
+	checkButtonFunction.apply(this);
 });
-bankMagenta.addEventListener("click", function a(event) {
-		console.log("bankMagenta clicked");
-		if(codeGuessNumber < codeNumber) {
-			currentGuess = "M";
-			getGuess();
-			createBoxes(guesses, guessesDisplay);
-			codeGuessNumber++;
-		}
-		disableColorBank(bankMagenta, a);
+bankMagenta.addEventListener("click", function(event) {
+		// console.log("bankMagenta clicked");
+	checkButtonFunction.apply(this);
 });
-bankLime.addEventListener("click", function a(event) {
-		console.log("bankLime clicked");
-		if(codeGuessNumber < codeNumber) {
-			currentGuess = "L";
-			getGuess();
-			createBoxes(guesses, guessesDisplay);
-			codeGuessNumber++;
-		}
-		disableColorBank(bankLime, a);
+bankLime.addEventListener("click", function(event) {
+		// console.log("bankLime clicked");
+	checkButtonFunction.apply(this);
 });
-bankCyan.addEventListener("click", function a(event) {
-		console.log("bankCyan clicked");
-		if(codeGuessNumber < codeNumber) {
-			currentGuess = "C";
-			getGuess();
-			createBoxes(guesses, guessesDisplay);
-			codeGuessNumber++;
-		}
-		disableColorBank(bankCyan, a);
+bankCyan.addEventListener("click", function(event) {
+		// console.log("bankCyan clicked");
+	checkButtonFunction.apply(this);
 });
-bankSienna.addEventListener("click", function a(event) {
-		console.log("bankSienna clicked");
-		if(codeGuessNumber < codeNumber) {
-			currentGuess = "S";
-			getGuess();
-			createBoxes(guesses, guessesDisplay);
-			codeGuessNumber++;
-		}
-		disableColorBank(bankSienna, a);
+bankSienna.addEventListener("click", function(event) {
+		// console.log("bankSienna clicked");
+	checkButtonFunction.apply(this);
 });
 
 function gameSetUp() {
@@ -361,6 +301,19 @@ function genCode(codeNumber) {
 function genNum() {
 	var x = (Math.floor(Math.random()*colors.length));
 	return x;
+}
+
+function checkButtonFunction(){
+	if(codeGuessNumber < codeNumber) {
+		// console.log(this.textContent);
+		currentGuess = this.textContent;
+		getGuess();
+		createBoxes(guesses, guessesDisplay);
+		codeGuessNumber++;
+	}
+	if(codeGuessNumber == codeNumber) {
+		disableColorBank();
+	}
 }
 
 function getGuess() {
@@ -466,7 +419,7 @@ function isGameOver() {
 }
 
 function disableColorBank() {
-		if(codeGuessNumber == codeNumber) {
+		// if(codeGuessNumber == codeNumber) {
 		console.log("You're at the maximum guess number.");
 		bankRed.setAttribute("class", "boxes engaged");
 		bankOrange.setAttribute("class", "boxes engaged");
@@ -484,7 +437,7 @@ function disableColorBank() {
 			bankCyan.setAttribute("class", "boxes engaged");
 			bankSienna.setAttribute("class", "boxes engaged");
 		}
-	}
+	// }
 }
 
 function enableColorBank() {
