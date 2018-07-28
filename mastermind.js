@@ -260,10 +260,6 @@ gameModeHard.addEventListener("click", function() {
 
 resetTurnButton.addEventListener("click", function(event) {
 	console.log("reset btn clicked");
-	displayOldGuesses();
-	storeOldGuesses();
-	storeOldHints();
-	displayOldHints();
 	resetTurn();
 });
 
@@ -273,7 +269,11 @@ checkGuessButton.addEventListener("click", function(event) {
 	console.log("check guess btn clicked");
 	turnNumber--;
 	checkGuessColorBank();
+	displayOldGuesses();
+	storeOldGuesses();
 	displayCurrentHints();
+	storeOldHints();
+	displayOldHints()
 	displayTurns();
 });
 
