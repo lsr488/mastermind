@@ -2,56 +2,91 @@
 <html>
 <head>
 	<title>Mastermind</title>
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="mastermind_v2.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
 <div class="container">
 	<h1>Mastermind Game</h1>
+	<ul class="game-mode">
+		<li class="game-mode-type engaged" id="easy">Easy</li>
+		<li class="game-mode-type" id="normal">Medium</li>
+		<li class="game-mode-type" id="hard">Hard</li>
+	</ul>
 
-	<h2 class="colors">
-		<span class="red"><span class="underline">R</span>ed.</span> 
-			<span class="orange"><span class="underline">O</span>range.</span> 
-			<span class="yellow"><span class="underline">Y</span>ellow.</span> 
-			<span class="green"><span class="underline">G</span>reen.</span> 
-			<span class="blue"><span class="underline">B</span>lue.</span> 
-			<span class="purple"><span class="underline">P</span>urple.</span>
+	<h2 id="easy-colors" class="colors">
+			<span id="red-banner" class="red"><span class="underline">R</span>ed.</span> 
+			<span id="orange-banner" class="orange"><span class="underline">O</span>range.</span> 
+			<span id="yellow-banner" class="yellow"><span class="underline">Y</span>ellow.</span> 
+			<span id="green-banner" class="green"><span class="underline">G</span>reen.</span> 
+			<span id="blue-banner" class="blue"><span class="underline">B</span>lue.</span> 
+			<span id="purple-banner" class="purple"><span class="underline">P</span>urple.</span>		
+	</h2>
+	<h2 id="normal-colors" class="colors no-display">
+			<span id="magenta-banner" class="magenta"><span class="underline">M</span>agenta.</span> 
+			<span id="red-banner" class="red"><span class="underline">R</span>ed.</span> 
+			<span id="orange-banner" class="orange"><span class="underline">O</span>range.</span> 
+			<span id="yellow-banner" class="yellow"><span class="underline">Y</span>ellow.</span> 
+			<span id="green-banner" class="green"><span class="underline">G</span>reen.</span> 
+			<span id="cyan-banner" class="cyan"><span class="underline">C</span>yan.</span> 
+			<span id="blue-banner" class="blue"><span class="underline">B</span>lue.</span> 
+			<span id="purple-banner" class="purple"><span class="underline">P</span>urple.</span>
+	</h2>
+	<h2 id="hard-colors" class="colors no-display">
+			<span id="magenta-banner" class="magenta"><span class="underline">M</span>agenta.</span> 
+			<span id="red-banner" class="red"><span class="underline">R</span>ed.</span> 
+			<span id="orange-banner" class="orange"><span class="underline">O</span>range.</span> 
+			<span id="yellow-banner" class="yellow"><span class="underline">Y</span>ellow.</span> 
+			<span id="lime-banner" class="lime"><span class="underline">L</span>ime.</span>
+			<span id="green-banner" class="green"><span class="underline">G</span>reen.</span> 
+			<span id="cyan-banner" class="cyan"><span class="underline">C</span>yan.</span> 
+			<span id="blue-banner" class="blue"><span class="underline">B</span>lue.</span> 
+			<span id="purple-banner" class="purple"><span class="underline">P</span>urple.</span>
+			<span id="sienna-banner" class="sienna"><span class="underline">S</span>ienna.</span> 
 	</h2>
 
-	<p>Guess four colors. There are no repeats.</p>
-	<p>A <strong>*</strong> means you have the correct color in the correct place. A <strong>o</strong> means you have the correct color but in the wrong place. The placement of the markers do <em>not</em> correspond with the colors' locations.</p>
+	<p class="color-instructions" id="easy-number">Guess <strong>four</strong> colors. There are no repeats.</p>
+	<p class="color-instructions no-display" id="normal-number">Guess <strong>six</strong> colors. There are no repeats.</p>
+	<p class="color-instructions no-display" id="hard-number">Guess <strong>eight</strong> colors. There are no repeats.</p>
+	
 	<div class="game-area">
-		<h2 class="active status" id="status-display"></h2>
 
-		<div id="code-container"  class="active">Code : <span id="code"></span>
-				<div id="first-code" class="boxes"></div>
-				<div id="second-code" class="boxes"></div>
-				<div id="third-code" class="boxes"></div>
-				<div id="fourth-code" class="boxes"></div>
+		<hr>
+		<fieldset class="color-bank">
+			<legend>Color Bank:</legend>
+			<div id="color-guess-bank">
+				<div id="bank-magenta" class="boxes magenta no-display">M</div>
+				<div id="bank-red" class="boxes red">R</div>
+				<div id="bank-orange" class="boxes orange">O</div>
+				<div id="bank-yellow" class="boxes yellow">Y</div>
+				<div id="bank-lime" class="boxes lime no-display">L</div>
+				<div id="bank-green" class="boxes green">G</div>
+				<div id="bank-cyan" class="boxes cyan no-display">C</div>
+				<div id="bank-blue" class="boxes blue">B</div>
+				<div id="bank-purple" class="boxes purple">P</div>
+				<div id="bank-sienna" class="boxes sienna no-display">S</div>
+			</div>
+			<button name="check-guess" type="submit" value="submit-true">Check</button>
+			<button name="reset-turn" value="reset-turn">Reset Turn</button>
+			<button name="reset-game" value="reset-game" class="green no-display">Play Again?</button>
+		</fieldset>
+		<hr>
+
+		<p>Turns Left: <span id="turns-left"></span></p>
+
+		<h2 class="no-display status" id="status-display"></h2>
+
+		<div id="code-container" class="no-display">Code : 
+			<span id="code"></span>
 		</div>
-		<div>
-			Guess: <span id="guesses"></span>
-				<div id="first-color" class="boxes"></div>
-				<div id="second-color" class="boxes"></div>
-				<div id="third-color" class="boxes"></div>
-				<div id="fourth-color" class="boxes"></div>
+		<div>Guess: 
+			<span id="guesses"></span>
 		</div>
 
 		<div>Hints: <span class="hints-display"></span></div>
 
-		<fieldset class="guess-input">
-			<legend>Your guess:</legend>
-			<div>
-				<input type="text" name="first-guess" id="first-guess" placeholder="R">
-				<input type="text" name="second-guess" id="second-guess" placeholder="O">
-				<input type="text" name="third-guess" id="third-guess" placeholder="Y">
-				<input type="text" name="fourth-guess" id="fourth-guess" placeholder="G">
-				<button id="submit" name="submit" type="submit" value="submit-true">Submit</button>
-			</div>
-		</fieldset>
 	</div>
-
-	<p>Turns Left: <span id="turns-left"></span></p>
 
 	<div class="archive">
 		<div class="guess-archive">
@@ -64,8 +99,16 @@
 		</div>
 	</div>
 
+<div id="instructions">
+	<h2>How To Play:</h2>
+	<p>To make a guess, click the boxes in the <strong>color bank</strong>. Then, click <strong>Check</strong> to check your guess against the secret code. To make your next guess, click <strong>Reset Turn</strong>.</p>
+	<p>If you want to change your guess before checking, click <strong>Reset Turn</strong>.</p>
+	<p>The <strong>*</strong> hint means you have the correct color in the correct place. The <strong>o</strong> hint means you have the correct color but in the wrong place. The placement of the hints do <strong>not</strong> correspond with the colors' locations.</p>
+	<p>The game ends when you've guessed the secret code or you run out of turns. To play again, either refresh the page or click <strong>Play Again?</strong>.</p>
 </div>
 
-<script type="text/javascript" src="mastermind.js"></script>
+</div>
+
+<script type="text/javascript" src="mastermind_v2.js"></script>
 </body>
 </html>
