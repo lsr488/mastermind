@@ -1,116 +1,307 @@
-// guess pegs: 6, in different colors (these are possible options)
-// key pegs: black/white to indicate yes/no
-// code: 4 of 6 code peg colors, in specific order
-	// easy: no duplicate colors
-	// hard: duplicates allowed (special feedback rules)
-// number of turns: 12, 10, or 8
+//game mode buttons
+var gameModeEasy = document.querySelector("#easy");
+var gameModeNormal = document.querySelector("#normal");
+var gameModeHard = document.querySelector("#hard");
 
-// code is set (random generation)
-// prompt user for guess
-// compare guess against code set
-// provide feedback on guess
-	// for every correct color and correct location, use a black peg
-	// for every correct color and incorrect location, use a white peg 
-// game ends when the code is guessed or number of turns maxed out
+// game mode colors-banners
+var easyColors = document.getElementById("easy-colors");
+var normalColors = document.getElementById("normal-colors");
+var hardColors = document.getElementById("hard-colors");
 
-// 0 red
-// 1 orange
-// 2 yellow
-// 3 green
-// 4 blue
-// 5 purple
+//instruction number
+var easyNumber = document.getElementById("easy-number");
+var normalNumber = document.getElementById("normal-number");
+var hardNumber = document.getElementById("hard-number");
 
+// display solution code
 var codeDisplay = document.querySelector("#code");
 var codeContainerDisplay = document.querySelector("#code-container");
-var firstCode = document.querySelector("#first-code");
-var secondCode = document.querySelector("#second-code");
-var thirdCode = document.querySelector("#third-code");
-var fourthCode = document.querySelector("#fourth-code");
+
+// display color guesses
 var guessesDisplay = document.querySelector("#guesses");
 var hintsDisplay = document.querySelector(".hints-display");
-var firstColor = document.querySelector("#first-color");
-var secondColor = document.querySelector("#second-color");
-var thirdColor = document.querySelector("#third-color");
-var fourthColor = document.querySelector("#fourth-color");
+
+// archive displays
 var guessesArchiveDisplay = document.querySelector("#guessesArchive");
 var hintsArchiveDisplay = document.querySelector("#hintsArchive");
-var guessInput1 = document.querySelector("#first-guess");
-var guessInput2 = document.querySelector("#second-guess");
-var guessInput3 = document.querySelector("#third-guess");
-var guessInput4 = document.querySelector("#fourth-guess");
-var submitButton = document.querySelector("#submit");
+
+// color bank
+var guessBank = document.querySelector("#color-guess-bank");
+var bankRed = document.querySelector("#bank-red");
+var bankOrange = document.querySelector("#bank-orange");
+var bankYellow = document.querySelector("#bank-yellow");
+var bankGreen = document.querySelector("#bank-green");
+var bankBlue = document.querySelector("#bank-blue");
+var bankPurple = document.querySelector("#bank-purple");
+var bankMagenta = document.querySelector("#bank-magenta");
+var bankLime = document.querySelector("#bank-lime");
+var bankCyan = document.querySelector("#bank-cyan");
+var bankSienna = document.querySelector("#bank-sienna");
+var checkGuessButton = document.getElementsByName("check-guess")[0];
+var resetTurnButton = document.getElementsByName("reset-turn")[0];
+var resetGameButton = document.getElementsByName("reset-game")[0];
+
+// misc displays
 var turnsLeftDisplay = document.querySelector("#turns-left");
 var statusDisplay = document.querySelector("#status-display");
 
-var colors = ["R", "O", "Y", "G", "B", "P"];
-var code = [];
-var guesses = "";
-var guessesArchive = [];
-var hintsArchive = [];
+var gameMode = "easy";
+var gameStats = {
+	shared: {
+		code: [],
+		guesses: [],
+		guessesArchive: [],
+		guessesArchiveString: "",
+		currentGuess: "",
+		hints: [],
+		hintsArchive: [],
+		hintsArchiveString: "",
+		isInCode: 0,
+		isExactMatch: 0,
+		codeGuessNumber: 0,
+	},
+	easy: {
+		colors: ["R", "O", "Y", "G", "B", "P"],
+		codeNumber: 4,
+		turnNumber: 10
+	},
+	normal: {
+		colors: ["M", "R", "O", "Y", "G", "L", "B", "P"],
+		codeNumber: 6,
+		turnNumber: 8
+	},
+	hard: {
+		colors: ["M", "R", "O", "Y", "L", "G", "C", "B", "P", "S"],
+		codeNumber: 8,
+		turnNumber: 8
+	}
+}
 
-// beware of codeNumber > colors.length
-// because we're using colors.length as a 
-// a limiter on the random number generator
-// and also requiring unique numbers, so it literally
-// has spaces that can't be filled
+gameModeEasy.addEventListener("click", function() {
+	// gameMode
+	gameModeEasy.classList.add("engaged");
+	gameModeNormal.classList.remove("engaged");
+	gameModeHard.classList.remove("engaged");
+	
+	// color banners
+	easyColors.classList.remove("no-display");
+	normalColors.classList.add("no-display");
+	hardColors.classList.add("no-display");
+	
+	// instructions
+	easyNumber.classList.remove("no-display");
+	normalNumber.classList.add("no-display");
+	hardNumber.classList.add("no-display");
 
-// TODO: create an option for more colors and a longer code to break
+	// color bank
+	bankMagenta.classList.add("no-display");
+	bankLime.classList.add("no-display");
+	bankCyan.classList.add("no-display");
+	bankSienna.classList.add("no-display");
 
-var codeNumber = 4;
-var turnNumber = 10;
-
-function genCode() {
+	gameMode = "easy";
+	resetGame();
 	displayTurns();
+	gameSetUp();
+});
+
+gameModeNormal.addEventListener("click", function() {
+	// gameMode
+	gameModeNormal.classList.add("engaged");
+	gameModeEasy.classList.remove("engaged");
+	gameModeHard.classList.remove("engaged");
+
+	// color banners
+	easyColors.classList.add("no-display");
+	normalColors.classList.remove("no-display");
+	hardColors.classList.add("no-display");
+
+	// instructions
+	easyNumber.classList.add("no-display");
+	normalNumber.classList.remove("no-display");
+	hardNumber.classList.add("no-display");
+
+	// color bank
+	bankMagenta.classList.remove("no-display");
+	bankLime.classList.remove("no-display");
+	bankCyan.classList.add("no-display");
+	bankSienna.classList.add("no-display");
+
+	gameMode = "normal";
+	resetGame();
+	displayTurns();
+	gameSetUp();
+});
+
+gameModeHard.addEventListener("click", function() {
+	// gameMode
+	gameModeHard.classList.add("engaged");
+	gameModeNormal.classList.remove("engaged");
+	gameModeEasy.classList.remove("engaged");
+
+	// color banners
+	easyColors.classList.add("no-display");
+	normalColors.classList.add("no-display");
+	hardColors.classList.remove("no-display");
+
+	// instructions
+	easyNumber.classList.add("no-display");
+	normalNumber.classList.add("no-display");
+	hardNumber.classList.remove("no-display");
+
+	// color bank
+	bankMagenta.classList.remove("no-display");
+	bankLime.classList.remove("no-display");
+	bankCyan.classList.remove("no-display");
+	bankSienna.classList.remove("no-display");
+
+	gameMode = "hard";
+	resetGame();
+	displayTurns();
+	gameSetUp();
+});
+
+// isGameOver() runs inside checkGuess()
+// otherwise "you're out of turns" displays even if you won on the last turn
+checkGuessButton.addEventListener("click", function(event) {
+	// console.log("check guess btn clicked");
+	if(guesses.length != codeNumber) {
+		statusDisplay.classList.remove("no-display");
+		statusDisplay.textContent = "You're missing at least one guess."
+	} else {
+		statusDisplay.classList.add("no-display");
+		checkGuess();
+		displayOldGuesses();
+		storeOldGuesses();
+		displayCurrentHints();
+		storeOldHints();
+		displayOldHints()
+		turnNumber--;
+		displayTurns();
+	}
+});
+
+resetTurnButton.addEventListener("click", function(event) {
+	// console.log("reset btn clicked");
+	resetTurn();
+});
+
+resetGameButton.addEventListener("click", function(event) {
+	// console.log("play again btn clicked");
+	resetGame();
+	gameSetUp();
+})
+
+bankRed.addEventListener("click", function(event) {
+	// console.log("bankRed clicked");
+	checkButtonFunction.apply(this);
+});
+bankOrange.addEventListener("click", function(event) {
+		// console.log("bankOrange clicked");
+	checkButtonFunction.apply(this);
+});
+bankYellow.addEventListener("click", function(event) {
+		// console.log("bankYellow clicked");
+	checkButtonFunction.apply(this);
+});
+bankGreen.addEventListener("click", function(event) {
+		// console.log("bankGreen clicked");
+	checkButtonFunction.apply(this);
+});
+bankBlue.addEventListener("click", function(event) {
+		// console.log("bankBlue clicked");
+	checkButtonFunction.apply(this);
+});
+bankPurple.addEventListener("click", function a(event) {
+		// console.log("bankPurple clicked");
+	checkButtonFunction.apply(this);
+});
+bankMagenta.addEventListener("click", function(event) {
+		// console.log("bankMagenta clicked");
+	checkButtonFunction.apply(this);
+});
+bankLime.addEventListener("click", function(event) {
+		// console.log("bankLime clicked");
+	checkButtonFunction.apply(this);
+});
+bankCyan.addEventListener("click", function(event) {
+		// console.log("bankCyan clicked");
+	checkButtonFunction.apply(this);
+});
+bankSienna.addEventListener("click", function(event) {
+		// console.log("bankSienna clicked");
+	checkButtonFunction.apply(this);
+});
+
+function gameSetUp() {
+	code = gameStats.shared.code;
+	hints = gameStats.shared.hints;
+	guesses = gameStats.shared.guesses;
+	guessesArchive = gameStats.shared.guessesArchive;
+	guessesArchiveString = gameStats.shared.guessesArchiveString;
+	hintsArchive = gameStats.shared.hintsArchive;
+	hintsArchiveString = gameStats.shared.hintsArchiveString;
+	currentGuess = gameStats.shared.currentGuess;
+	isInCode = gameStats.shared.isInCode;
+	isExactMatch = gameStats.shared.isExactMatch;
+	codeGuessNumber = gameStats.shared.codeGuessNumber;
+
+	if(gameMode == "easy") {
+		codeNumber = gameStats.easy.codeNumber;
+		colors = gameStats.easy.colors;
+		turnNumber = gameStats.easy.turnNumber;
+	} else if(gameMode == "normal") {
+		codeNumber = gameStats.normal.codeNumber;
+		colors = gameStats.normal.colors;
+		turnNumber = gameStats.normal.turnNumber;
+	} else if(gameMode == "hard") {
+		codeNumber = gameStats.hard.codeNumber;
+		colors = gameStats.hard.colors;
+		turnNumber = gameStats.hard.turnNumber;
+	}
+	genCode(codeNumber);
+}
+
+function genCode(codeNumber) {
 	var tempCode = [];
 
 	while(tempCode.length < codeNumber) {
-		var colorSelector = genNum();
-		if(!tempCode.includes(colorSelector)) {
-			tempCode.push(colorSelector);		
+			var colorSelector = genNum();
+			if(!tempCode.includes(colorSelector)) {
+				tempCode.push(colorSelector);		
+			}
 		}
-	}
 	tempCode.forEach(function(el) {
 		code.push(colors[el]);
-	});
-	// console.log("code :", code);
+	});		
 
-	return code;
+	displayTurns();
+	return code
 }
 
-// this potentially isn't very flexible if we want a bigger code
-// because it's dependent on the length colors array
 function genNum() {
 	var x = (Math.floor(Math.random()*colors.length));
 	return x;
 }
 
-// TODO make this more flexible for more input options
-submitButton.addEventListener("click", function(event) {
-	guesses = "";
-	guesses = guesses + guessInput1.value + " " + guessInput2.value + " " + guessInput3.value + " " + guessInput4.value;
+function checkButtonFunction(){
+	if(codeGuessNumber < codeNumber) {
+		// console.log(this.textContent);
+		currentGuess = this.textContent;
 		getGuess();
-	// console.log(guesses);
-});
+		createBoxes(guesses, guessesDisplay);
+		codeGuessNumber++;
+	}
+	if(codeGuessNumber == codeNumber) {
+		disableColorBank();
+	}
+}
 
-
-// get user guess and compare guess against code
-// TODO: refactor into 2 functions, getGuess and checkGuess
 function getGuess() {
-	var isInCode = 0;
-	// var isNotInCode = 0;
-	var isExactMatch = 0;
-	// var isNotExactMatch = 0; 
-	var hints = [];
-	var guessesArchiveString = "";
-	var hintsArchiveString = "";
+	guesses.push(currentGuess);
+}
 
-	// console.log("guesses from input:", guesses);
-
-	// var guesses = "r,o,y,g";	
-	guesses = guesses.toUpperCase().split(" ");
-	// console.log("guess:", guesses);
-
-// check if exact match between code[i] and guesses[i]
+function checkGuess() {
 	for(var i = 0; i < guesses.length; i++) {
 		if(guesses[i] == code[i]) {
 			// console.log("match!", guesses[i], code[i]); // black key peg
@@ -122,161 +313,172 @@ function getGuess() {
 			hints.push("o");
 		}
 	}
-	guessesArchive.push(guesses);
-	hintsArchive.push(hints);
-
-	// console.log("Number of exact matches:", isExactMatch); // black key peg
-	// console.log("Number of colors included:", isInCode); // white key peg
-	// console.log(hints);
-
-	// for guess archive display
-	// console.log("guesses archive:", guessesArchive);
-	guessesArchive.forEach(function(element) {
-		// console.log("guesses archive element:", element);
-
-		for(var i = 0; i < element.length; i++) {
-			var archiveClass = "";
-			if(element[i] == "R") {
-				archiveClass = "red";
-			}		
-			else if(element[i] == "O") {
-				archiveClass = "orange";
-			}		
-			else if(element[i] == "Y") {
-				archiveClass = "yellow";
-			}		
-			else if(element[i] == "G") {
-				archiveClass = "green";
-			}		
-			else if(element[i] == "B") {
-				archiveClass = "blue";
-			}		
-			else if(element[i] == "P") {
-				archiveClass = "purple";
-			}				
-			guessesArchiveString += `<div class="boxes ${archiveClass}">${element[i]}</div> `;
-		}
-		guessesArchiveString += `<br>`;
-	});
-
-	// console.log("guess archive string:", guessesArchiveString);
-
-	// for hints archive display
-	for(var j = 0; j < hintsArchive.length; j++) {
-		hintsArchiveString += '<div class="hint">' + hintsArchive[j].sort().join(" ") + "</div>";
-	}
-
-	// console.log(guessesArchiveString + hintsArchiveString)
-
-	// console.log(guessesArchiveString);
-	// console.log(hintsArchiveString);
-
-	// display guesses on webpage
-	firstColor.textContent = guessInput1.value.toUpperCase();
-	secondColor.textContent = guessInput2.value.toUpperCase();
-	thirdColor.textContent = guessInput3.value.toUpperCase();
-	fourthColor.textContent = guessInput4.value.toUpperCase();
-	// guessesDisplay.textContent = guesses.join(", ");
-	hintsDisplay.textContent = hints.sort().join(" ");
-	guessesArchiveDisplay.innerHTML = guessesArchiveString;
-	hintsArchiveDisplay.innerHTML = hintsArchiveString;
-
-	// TODO: figure out how to make it more flexible
-	assignBgColor(guesses, firstColor, 0);
-	assignBgColor(guesses, secondColor, 1);
-	assignBgColor(guesses, thirdColor, 2);
-	assignBgColor(guesses, fourthColor, 3);
-
-	turnNumber--;
-	displayTurns();
-	isGameOver(isExactMatch);
-	// isWon(isExactMatch);
-	// isOutOfTurns();
+	// console.log("hints:", hints);
+	isGameOver();
 }
 
-// add color-bg class based on guesses[i] content
-function assignBgColor(guesses, display, index) {
-	display.setAttribute("class", "boxes");
-	if(guesses[index] == "R") {
-		display.classList.add("red");
-	}		
-	else if(guesses[index] == "O") {
-		display.classList.add("orange");
-	}		
-	else if(guesses[index] == "Y") {
-		display.classList.add("yellow");
-	}		
-	else if(guesses[index] == "G") {
-		display.classList.add("green");
-	}		
-	else if(guesses[index] == "B") {
-		display.classList.add("blue");
-	}		
-	else if(guesses[index] == "P") {
-		display.classList.add("purple");
+function createBoxes(array, webDisplay) {
+	var stringAccumulator = "";
+	for(var i = 0; i < array.length; i++) {
+		if(array[i] == "R") {
+			stringAccumulator += `<div class="boxes red">R</div> `;
+		}		
+		else if(array[i] == "O") {
+			stringAccumulator += `<div class="boxes orange">O</div> `;
+		}		
+		else if(array[i] == "Y") {
+			stringAccumulator += `<div class="boxes yellow">Y</div> `;
+		}		
+		else if(array[i] == "G") {
+			stringAccumulator += `<div class="boxes green">G</div> `;
+		}		
+		else if(array[i] == "B") {
+			stringAccumulator += `<div class="boxes blue">B</div> `;
+		}		
+		else if(array[i] == "P") {
+			stringAccumulator += `<div class="boxes purple">P</div> `;
+		}
+		else if(array[i] == "M") {
+			stringAccumulator += `<div class="boxes magenta">M</div> `;
+		}				
+		else if(array[i] == "L") {
+			stringAccumulator += `<div class="boxes lime">L</div> `;
+		}				
+		else if(array[i] == "C") {
+			stringAccumulator += `<div class="boxes cyan">C</div> `;
+		}				
+		else if(array[i] == "S") {
+			stringAccumulator += `<div class="boxes sienna">S</div> `;
+		}
 	}
+		webDisplay.innerHTML = stringAccumulator + `<br/>`;
+}
+
+function storeOldGuesses() {
+	guessesArchiveString += guessesArchiveDisplay.innerHTML;
+	guessesArchiveDisplay.innerHTML = guessesArchiveString;
+}
+
+function displayOldGuesses() {
+	guessesArchive.push(guesses);
+	guessesArchive.forEach(function(turn) {
+		createBoxes(turn, guessesArchiveDisplay);
+	});
+}
+
+function displayCurrentHints() {
+	hints.sort();
+	hintsDisplay.innerHTML = hints.join(" ");
+}
+
+function storeOldHints() {
+	hintsArchiveString += `<div class="hint">${hintsDisplay.innerHTML}</div>`;
+}
+
+function displayOldHints() {
+	hintsArchiveDisplay.innerHTML = hintsArchiveString;
 }
 
 function displayTurns() {
 	turnsLeftDisplay.textContent = turnNumber;
 }
 
-// function isWon(isExactMatch) {
-// 	if(isExactMatch == 4) {
-// 		endOfGameDisplay();
-// 		disableInputs();
-// 		statusDisplay();
-// 		statusDisplay.textContent = "You won!";
-// 	}
-// }
-
-// function isOutOfTurns() {
-// 	if(turnNumber == 0) {
-// 		endOfGameDisplay();
-// 		disableInputs();
-// 		statusDisplay();
-// 		statusDisplay.textContent = "You're out of turns.";
-// 	}
-// }
-
-function isGameOver(isExactMatch) {
+function isGameOver() {
 	if(isExactMatch == 4) {
-		endOfGameDisplay();
-		disableInputs();
+		displayCode();
+		disableColorBank();
 		endofGameStatusDisplay();
+		resetGameButton.classList.remove("no-display");
 		statusDisplay.textContent = "You won!";
 	} else if(turnNumber == 0) {
-		endOfGameDisplay();
-		disableInputs();
+		displayCode();
+		disableColorBank();
 		endofGameStatusDisplay();
+		resetGameButton.classList.remove("no-display");
 		statusDisplay.textContent = "You're out of turns.";
 	}
 }
 
-function disableInputs() {
-	guessInput1.setAttribute("disabled", "disabled");
-	guessInput2.setAttribute("disabled", "disabled");
-	guessInput3.setAttribute("disabled", "disabled");
-	guessInput4.setAttribute("disabled", "disabled");
-	submitButton.setAttribute("disabled", "disabled");
+function disableColorBank() {
+		// if(codeGuessNumber == codeNumber) {
+		// console.log("You're at the maximum guess number.");
+		bankRed.setAttribute("class", "boxes engaged");
+		bankOrange.setAttribute("class", "boxes engaged");
+		bankYellow.setAttribute("class", "boxes engaged");
+		bankGreen.setAttribute("class", "boxes engaged");
+		bankBlue.setAttribute("class", "boxes engaged");
+		bankPurple.setAttribute("class", "boxes engaged");
+		if(gameMode == "normal") {
+			bankMagenta.setAttribute("class", "boxes engaged");
+			bankLime.setAttribute("class", "boxes engaged");
+		}
+		if(gameMode == "hard") {
+			bankMagenta.setAttribute("class", "boxes engaged");
+			bankLime.setAttribute("class", "boxes engaged");
+			bankCyan.setAttribute("class", "boxes engaged");
+			bankSienna.setAttribute("class", "boxes engaged");
+		}
+	// }
+}
+
+function enableColorBank() {
+		bankRed.setAttribute("class", "boxes red");
+		bankOrange.setAttribute("class", "boxes orange");
+		bankYellow.setAttribute("class", "boxes yellow");
+		bankGreen.setAttribute("class", "boxes green");
+		bankBlue.setAttribute("class", "boxes blue");
+		bankPurple.setAttribute("class", "boxes purple");
+		if(gameMode == "normal") {
+			bankMagenta.setAttribute("class", "boxes magenta");
+			bankLime.setAttribute("class", "boxes lime");
+		}
+		if(gameMode == "hard") {
+			bankMagenta.setAttribute("class", "boxes magenta");
+			bankLime.setAttribute("class", "boxes lime");
+			bankCyan.setAttribute("class", "boxes cyan");
+			bankSienna.setAttribute("class", "boxes sienna");
+		}
+}
+
+function resetTurn() {
+	codeGuessNumber = 0;
+	guessesDisplay.textContent = "";
+	guesses = [];
+	hints = [];
+	hintsDisplay.textContent = "";
+	isExactMatch = 0;
+	isInCode = 0;
+	currentGuess = "";
+	enableColorBank();
+}
+
+function resetGame() {
+	resetTurn();
+	gameStats.shared.hints = [];
+	hintsArchiveString = "";
+	hintsArchiveDisplay.textContent = "";
+	gameStats.shared.guesses = [];
+	gameStats.shared.guessesArchive = [];
+	guessesArchiveString = "";
+	guessesArchiveDisplay.textContent = "";
+	gameStats.shared.code = [];
+	codeDisplay.textContent = "";
+	codeContainerDisplay.classList.add("no-display");
+	statusDisplay.classList.add("no-display");
+	resetGameButton.classList.add("no-display");
+	checkGuessButton.classList.remove("no-display");
+	resetTurnButton.classList.remove("no-display");
 }
 
 function endofGameStatusDisplay() {
-	codeContainerDisplay.classList.toggle("active");
-	statusDisplay.classList.toggle("active");
+	checkGuessButton.classList.add("no-display");
+	resetTurnButton.classList.add("no-display");
+	codeContainerDisplay.classList.remove("no-display");
+	statusDisplay.classList.remove("no-display");
 }
 
-function endOfGameDisplay() {
-	// can this be made more flexible?
-	firstCode.textContent = code[0];
-	secondCode.textContent = code[1];
-	thirdCode.textContent = code[2];
-	fourthCode.textContent = code[3];
-
-	assignBgColor(code, firstCode, 0);
-	assignBgColor(code, secondCode, 1);
-	assignBgColor(code, thirdCode, 2);
-	assignBgColor(code, fourthCode, 3);
+function displayCode() {
+	createBoxes(code, codeDisplay)
 }
 
-genCode();
+gameSetUp();
