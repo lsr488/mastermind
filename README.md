@@ -9,3 +9,7 @@ Guess a hidden color code. You'll get feedback on your guesses to help you. A * 
 ## GH Pages Repo
 https://github.com/lsr488/mastermind/tree/gh-pages
 
+# Tests
+
+- `./tests/generateSpecRunner.sh`
+- open `tests/SpecRunner.html` in a browser
